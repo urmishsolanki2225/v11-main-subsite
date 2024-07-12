@@ -1,0 +1,1585 @@
+body.route-governance-reports-activity-reports-overview {
+    section#main_page {
+        display: grid;
+        figure.figure_lead {
+            grid-column: 1/3;
+            grid-row: 2/3;
+        }
+        .blendMmsk {
+            grid-row: 1/2;
+            grid-column: 1/3;
+            opacity: 0.5;
+        }
+        header.landing_header {
+            position: fixed;
+            width: 100%;
+            top: 32px;
+            grid-row: 1/2;
+            grid-column: 1/3;
+            height: fit-content;
+            align-self: flex-end;
+            margin: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0);
+            transition: all 1500ms ease-in-out;
+            h2 {
+                margin: 0;
+                padding-left: 20px;
+                font-family: titillium-web, sans-serif;
+
+                text-transform: uppercase;
+                font-variant: small-caps;
+                line-height: 0.75;
+
+                color: black;
+                text-shadow: none;
+                font-size: 12px;
+                padding-top: 16px;
+                padding-bottom: 8px;
+                letter-spacing: 0px;
+            }
+            &.stuck {
+                background-color: rgba(255, 255, 255, 1);
+                box-shadow: 0 2px 3px #555;
+                transition: all 400ms ease-in-out;
+                h2 {
+                    color: black;
+                    text-shadow: none;
+                    font-size: 12px;
+                    padding-top: 16px;
+                    padding-bottom: 8px;
+                }
+            }
+        }
+    }
+    footer#footer_page {
+        margin-top: 0;
+        padding-top: 0;
+    }
+}
+body.route-governance-reports-annual-report-show {
+    #main_page {
+        display: grid;
+        z-index: 500;
+        h2 {
+            position: relative;
+            display: block;
+            grid-row: 2/3;
+            grid-column: 1/2;
+            padding-left: 0px;
+            padding-right: 10px;
+            padding-top: 10px;
+            padding-bottom: 0px;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 0px;
+            color: #555;
+            text-transform: capitalize;
+        }
+    }
+}
+body.route-governance-reports-world-congress-report {
+    #main_page {
+        display: grid;
+        z-index: 500;
+        h2 {
+            position: relative;
+            display: block;
+            grid-row: 2/3;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 10px;
+            margin: 0;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 0px;
+            color: #333;
+            text-transform: capitalize;
+        }
+    }
+}
+.annual_report_summary {
+    grid-row: 1/2;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-bottom: 10px;
+    background-color: aliceblue;
+    padding-bottom: 5px;
+    h3 {
+        position: relative;
+        display: block;
+        grid-row: 2/3;
+        grid-column: 1/3;
+        padding-left: unset;
+        padding-right: 15px;
+        padding-top: 30px;
+        margin: 0;
+        font-size: 18px;
+        margin-bottom: 0px;
+        background: linear-gradient(90deg, #0079b4, #00507a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .summary-text {
+        grid-row: 3/4;
+        grid-column: 1/3;
+        padding-left: 15px;
+        padding-right: 15px;
+        p {
+            display: block;
+            font-size: 14px;
+            line-height: 18px;
+            position: relative;
+            margin: 0;
+            margin-bottom: 10px;
+            & + h3,
+            & + h4 {
+                margin-top: 20px;
+            }
+        }
+    }
+    > figure {
+        position: sticky;
+        display: block;
+        grid-row: 1/2;
+        margin: 0;
+
+        img {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
+    > a {
+        position: relative;
+        display: block;
+        grid-row: 4/5;
+        margin-left: 15px;
+        width: fit-content;
+        padding: 8px 10px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        margin-left: 0;
+        margin-right: 0;
+        background: linear-gradient(
+            52deg,
+            #a4c3d2,
+            #c0d6e1
+        ); /* Initial gradient */
+        color: white;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 3px;
+        line-height: 1;
+        transition: box-shadow 700ms ease-in-out;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 1; /* Ensure the link text is above the pseudo-element */
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                52deg,
+                #0079b4,
+                #00507a
+            ); /* Hover gradient */
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 400ms ease-in-out;
+            z-index: -1; /* Ensure the pseudo-element is behind the link text */
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+
+        &:first-of-type {
+            margin-left: 15px;
+            margin-right: 8px;
+        }
+    }
+}
+.summary-text-blurb {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-top: 15px;
+    p {
+        grid-column: 1/2;
+        grid-row: span 1;
+    }
+    p:first-of-type {
+        font-weight: 700;
+    }
+    > h3 {
+        grid-row: 3/4;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    figure {
+        figcaption {
+            font-size: 11px;
+        }
+    }
+    figure.video {
+        grid-row: 1/2;
+        margin: 0;
+    }
+    > figure.figure_card {
+        grid-row: 1/2;
+        margin: 0;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+.summary-text-full {
+    position: relative;
+    display: block;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 700ms ease-in-out;
+    figure.figure_portrait {
+        position: relative;
+        width: 33.33vw;
+        float: left;
+        margin-left: 0;
+        margin-top: 0;
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+    h3 {
+        padding-top: 0px;
+        padding-bottom: 10px;
+        color: #333;
+        font-size: 15px;
+    }
+    ol,
+    ul {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        li {
+            font-size: 14px;
+            line-height: 18px;
+        }
+    }
+    h3 + ol,
+    h3 + ul {
+        margin-top: 0;
+    }
+    .column:last-child {
+        p:nth-last-child(2) {
+            font-weight: 700;
+        }
+        p:last-child {
+            font-style: italic;
+        }
+    }
+}
+article.show-fulltext {
+    .summary-text-full {
+        max-height: 3200px;
+    }
+}
+#annual_reports_listing,
+#world_congress_reports_listing {
+    position: relative;
+    grid-row: span 1;
+    grid-column: 1/3;
+    padding: 15px;
+    padding-top: 0;
+    padding-bottom: 25px;
+    border-bottom: 1px #ccc dashed;
+    border-left: 5px #0079b4 solid;
+    border-top: 15px white solid;
+    background-color: white;
+    box-shadow: 0px -2px 3px rgba(46, 46, 76, 1);
+    > h3 {
+        position: relative;
+        display: block;
+        margin: 0;
+        font-size: 20px;
+        margin-bottom: 5px;
+        color: #0079b4;
+    }
+    > p {
+        position: relative;
+        display: block;
+        margin: 0;
+        font-size: 14px;
+    }
+}
+#world_congress_reports_listing {
+    box-shadow: none;
+    border-bottom: none;
+    border-top: none;
+    padding-top: 15px;
+}
+article.card_annual_report {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    height: 45vw;
+    margin-top: 15px;
+    box-shadow: 0 0 0px #aaa;
+    transition: box-shadow 400ms ease-in-out;
+    > figure {
+        position: relative;
+        display: block;
+        grid-column: 2/3;
+        grid-row: 1/2;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+
+        img {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    > h4 {
+        position: relative;
+        display: block;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        height: fit-content;
+        align-self: flex-end;
+        padding-left: 10px;
+        color: white;
+        font-size: 24px;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        font-weight: 900;
+    }
+    > a {
+        position: relative;
+        display: block;
+        grid-column: 1/3;
+        grid-row: 1/2;
+        height: 100%;
+        width: 100%;
+        text-indent: -999em;
+        z-index: 1000;
+    }
+    &:hover {
+        box-shadow: 0 0 5px #777;
+        > figure {
+        }
+        .card-support-color {
+            width: 0;
+        }
+    }
+}
+article.card-activityreport_congress {
+    position: relative;
+    display: grid;
+    padding: 10px 12px 15px 12px;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    grid-row-gap: 10px;
+    margin-top: 15px;
+    header {
+        position: relative;
+        grid-row: 1/2;
+        grid-column: 1/2;
+        > h4 {
+            margin: 0;
+            margin-bottom: 2px;
+            font-size: 16px;
+            display: block;
+            position: relative;
+        }
+        > span {
+            position: relative;
+            display: block;
+            font-size: 12px;
+        }
+    }
+    figure {
+        position: relative;
+        display: block;
+        grid-row: 2/3;
+        grid-column: 1/2;
+        margin: 0;
+        height: 50vw;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    > a {
+        position: relative;
+        display: block;
+        grid-row: 1/3;
+        grid-column: 1/2;
+        margin: 0;
+        text-indent: -999em;
+    }
+}
+
+.card-support-color {
+    display: none;
+    background-color: #1e5dac;
+    grid-column: 2/3;
+    grid-row: 1/2;
+    z-index: 1;
+    mix-blend-mode: hue;
+    width: 100%;
+    transition: width 400ms ease-in-out;
+}
+
+.timeline {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    padding-top: 0;
+    border-left: 5px rgb(var(--support-color, 0, 121, 180)) solid;
+    border-top: 15px white solid;
+
+    > h3 {
+        position: relative;
+        display: block;
+        width: 100%;
+        margin: 0;
+        background-color: white;
+        z-index: 10;
+    }
+    .line {
+        position: absolute;
+        top: 0;
+        left: calc(50% + 5px);
+        width: 1px;
+        border-right: thin rgb(var(--support-color, 0, 121, 180)) solid;
+        z-index: 1;
+        transform: translateX(-50%);
+        display: none;
+    }
+}
+
+.timeline_section {
+    position: relative;
+    display: grid;
+    grid-gap: 15px;
+    margin-bottom: 20px;
+    z-index: 10;
+    > h3,
+    > h4 {
+        position: sticky;
+        display: block;
+        top: 32px;
+        grid-column: 1 / -1;
+        margin: 0;
+        font-size: 16px;
+        padding-bottom: 5px;
+        padding-top: 10px;
+        background-color: white;
+        z-index: 1000;
+        span {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            background: linear-gradient(90deg, #0079b4, #00507a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* For Firefox */
+            color: transparent !important;
+        }
+    }
+}
+
+.timeline_article {
+    position: relative;
+    display: grid;
+    padding: 10px;
+    grid-gap: 5px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out, transform 0.5s ease-in-out;
+    transform: scale(0.01);
+    height: fit-content;
+    > h4,
+    h5 {
+        position: relative;
+        display: block;
+        width: 100%;
+        margin: 0;
+        grid-column: 1/2;
+        grid-row: span 1;
+        font-size: 16px;
+    }
+    span.date {
+        position: relative;
+        display: block;
+        width: 100%;
+        margin: 0;
+        grid-column: 1/2;
+        grid-row: span 1;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    p {
+        position: relative;
+        display: block;
+        width: 100%;
+        margin: 0;
+        grid-column: 1/2;
+        grid-row: span 1;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    > a {
+        position: relative;
+        display: block;
+        grid-row: 4/5;
+
+        width: fit-content;
+        padding: 8px 10px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        margin-left: 0;
+        margin-right: 0;
+        background: linear-gradient(
+            52deg,
+            #a4c3d2,
+            #c0d6e1
+        ); /* Initial gradient */
+        height: fit-content;
+        color: white;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 3px;
+        line-height: 1;
+        transition: box-shadow 700ms ease-in-out;
+        text-decoration: none;
+        cursor: pointer;
+        z-index: 1; /* Ensure the link text is above the pseudo-element */
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                52deg,
+                #0079b4,
+                #00507a
+            ); /* Hover gradient */
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 400ms ease-in-out;
+            z-index: -1; /* Ensure the pseudo-element is behind the link text */
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+    }
+    &.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+    &.timeline_article_featured {
+        padding: 0;
+        padding-bottom: 10px;
+        border: 1px #ccc solid;
+
+        overflow: hidden;
+        figure {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            grid-row: 1/2;
+            grid-column: 1/2;
+            margin-bottom: 10px;
+            img {
+                position: relative;
+                display: block;
+                width: 100%;
+                height: auto;
+                margin: 0;
+            }
+        }
+        h4 {
+            grid-row: 3/4;
+            padding: 0px 10px;
+        }
+        > span {
+            grid-row: 2/3;
+            padding: 0px 10px;
+        }
+        p {
+            grid-row: 4/5;
+            padding: 0px 10px;
+        }
+        > a {
+            grid-row: 5/6;
+            margin-left: 10px;
+        }
+    }
+}
+
+.timeline_section_stack,
+.timeline_section_stack_last {
+    position: relative;
+    display: grid;
+    grid-gap: 15px;
+    .timeline_article {
+        background-color: aliceblue;
+        /*rgba(var(--support-color, 0, 121, 180), 0.1)*/
+        span.date {
+            grid-row: 1/2;
+        }
+        h4 {
+            grid-row: 2/3;
+        }
+        p {
+            grid-row: 3/4;
+        }
+        > a {
+            grid-row: 4/5;
+
+            span {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+article.card-video {
+    grid-template-rows: 40px calc((100vw - 20px) / 1.9) auto;
+    border: 1px #aaa solid;
+    padding-bottom: 15px;
+    header {
+        position: relative;
+        display: grid;
+        grid-row: 1/4;
+        grid-column: 1/2;
+        grid-template-rows: 40px calc((100vw - 20px) / 1.9) auto auto;
+        padding-left: 8px;
+        padding-right: 20px;
+        body.route-governance-reports-annual-report-showHighlight & {
+            grid-row: 1/4 !important;
+        }
+        span.first-collection {
+            align-self: center;
+            justify-self: left;
+            text-transform: lowercase;
+            font-variant-caps: all-small-caps;
+            font-feature-settings: "smcp" 1;
+            letter-spacing: 0.02rem;
+            font-weight: 600;
+            opacity: 1;
+            margin-bottom: 10px;
+
+            grid-column: 1/2;
+            color: #789bac;
+            grid-row: 3/4;
+            font-size: 1.1rem;
+            line-height: 1.2rem;
+            display: block;
+            margin-bottom: 0;
+            margin-top: 35px !important;
+        }
+        h3 {
+            position: relative;
+            display: block;
+            grid-row: 4/5;
+            grid-column: 1/2;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding-top: 0 !important;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            line-height: 1.3em;
+            letter-spacing: -0.5px;
+            -webkit-hyphens: none;
+            -ms-hyphens: none;
+            hyphens: none;
+        }
+        span.date {
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+            grid-column: 1/2;
+            align-self: center;
+            justify-self: left;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-weight: 600;
+            position: relative;
+            display: block;
+            grid-row: 1/2;
+        }
+    }
+    div.video-embed-container {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: calc((100vw - 20px) / 1.9);
+        grid-row: 2/3;
+        grid-column: 1/2;
+        margin: 0;
+        z-index: 100;
+        overflow: hidden;
+    }
+    div.card-blurb {
+        position: relative;
+        display: block;
+        grid-row: 6/7;
+        grid-column: 1/2;
+        padding-left: 8px;
+        padding-right: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        text-align: left;
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+        p {
+            margin: 0 !important;
+        }
+    }
+}
+
+@media screen and (min-width: 748px) {
+    body.route-governance-reports-activity-reports-overview {
+        section#main_page {
+            grid-template-columns: repeat(2, 1fr);
+            header.landing_header {
+                h2 {
+                    padding-left: 80px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding-top: 10px;
+                    padding-bottom: 8px;
+                    letter-spacing: 0px;
+                }
+                &.stuck {
+                    h2 {
+                        padding-left: 80px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        padding-top: 18px;
+                        padding-bottom: 8px;
+                        letter-spacing: 0px;
+                    }
+                }
+            }
+        }
+        .blendmask {
+            grid-column: 1/3;
+            grid-row: 2/3;
+            z-index: 50;
+            background: rgb(0, 0, 0);
+            background: linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.4948354341736695) 0%,
+                rgba(0, 0, 0, 0.37718837535014005) 35%,
+                rgba(0, 0, 0, 0) 100%
+            );
+            opacity: 0.66;
+        }
+        footer#footer_page {
+            padding-top: 0 !important;
+            border-left: 10px #0079b4 solid;
+            border-bottom: 20px white solid;
+            border-top: none;
+            box-sizing: border-box;
+            padding-bottom: 0;
+        }
+    }
+    body.route-governance-reports-annual-report-show {
+        #main_page {
+            h2 {
+                padding-left: 00px;
+                background-color: transparent;
+                width: fit-content;
+                padding-bottom: 10px;
+                padding-top: 20px;
+                font-size: 30px;
+            }
+        }
+    }
+    #annual_reports_listing {
+        grid-row: 3/4;
+        grid-column: 1/2;
+        box-shadow: none;
+        padding-left: 70px;
+        border-left: 10px #0079b4 solid;
+        padding-top: 0;
+        border-top: 30px white solid;
+        padding-right: 15px;
+    }
+    #world_congress_reports_listing {
+        grid-row: 3/4;
+        grid-column: 2/3;
+        padding-left: 15px;
+        padding-top: 30px;
+        padding-right: 40px;
+        border-left: 1px #ccc dashed;
+        border-bottom: none;
+    }
+
+    #annual_reports_listing,
+    #world_congress_reports_listing {
+        > h3 {
+            font-size: 18px;
+        }
+        > p {
+            font-size: 12.5px;
+            margin-bottom: 20px;
+        }
+    }
+
+    article.card_annual_report {
+        height: 20vw;
+        margin-top: 10px;
+    }
+    article.card-activityreport_congress {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-top: 10px;
+        padding: 8px 10px 10px 10px;
+        grid-row-gap: 8px;
+        transition: box-shadow 400ms ease-in-out;
+        header {
+            h4 {
+                font-size: 15px;
+            }
+            span {
+                font-size: 11px;
+            }
+        }
+        figure {
+            border-bottom-left-radius: 0px;
+            height: 27.5vw;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        &:hover {
+            box-shadow: 0 0 5px #777;
+        }
+    }
+
+    article.card-video {
+        grid-template-rows: 30px calc((100vw - 160px) / 2 / 1.9) auto;
+        header {
+            grid-template-rows: 30px calc((100vw - 160px) / 2 / 1.9) auto;
+            span.first-collection {
+                margin-top: 20px !important;
+            }
+            h3 {
+                font-size: 1.1rem !important;
+                margin-top: -5px !important;
+            }
+        }
+        div.video-embed-container {
+            height: calc((100vw - 160px) / 2 / 1.9);
+        }
+    }
+
+    .annual_report_summary {
+        padding-left: 65px;
+        margin-bottom: 20px;
+        padding-bottom: 5px;
+        padding-top: 10px;
+        > a {
+            padding: 10px 15px;
+            margin-top: 15px;
+            &:first-of-type {
+                margin-right: 10px;
+            }
+        }
+        .summary-text {
+            p {
+                max-width: 544px;
+                font-size: 12.5px;
+                line-height: 16px;
+            }
+        }
+    }
+    .summary-text-blurb {
+        padding-top: 10px;
+        figure.figure_portrait {
+            width: 180px;
+        }
+        figure.video,
+        figure.figure_card {
+            padding-right: 25px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            figcaption {
+                font-size: 12.5px;
+            }
+        }
+    }
+    .summary-text-full {
+        h3 {
+            font-size: 12.5px;
+        }
+        ul,
+        ol {
+            li {
+                font-size: 12.5px;
+                line-height: 16px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .timeline {
+        padding-right: 40px;
+        padding-left: 50px;
+        border-left-width: 10px;
+        .line {
+            display: block;
+            opacity: 0.33;
+            height: 10px;
+        }
+    }
+    .timeline_section {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-flow: dense;
+        grid-gap: 12px;
+        grid-column-gap: 30px;
+        margin-bottom: 25px;
+        > h3,
+        > h4 {
+            grid-column: 1/3;
+            text-align: center;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            top: 40px;
+        }
+    }
+    .timeline_article {
+        height: fit-content;
+        align-self: center;
+        grid-gap: 2px;
+        span.date {
+            font-size: 11px;
+        }
+        h4,
+        h5 {
+            font-size: 14px;
+            line-height: 16px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 11px;
+            line-height: 14px;
+        }
+        &.timeline_article_featured {
+            grid-column: 1/2;
+            grid-row: span 1;
+
+            &:nth-of-type(even) {
+                grid-column: 2/3;
+            }
+            &.visible {
+                overflow: unset;
+                &::after {
+                    content: "";
+                    position: absolute;
+
+                    background-color: rgb(var(--support-color, 0, 121, 180));
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    transform: translateX(-50%);
+                    top: 50%;
+                }
+                &.timeline_article_featured_left {
+                    &::after {
+                        right: -24px;
+                        left: unset;
+                    }
+                }
+                &.timeline_article_featured_right {
+                    &::after {
+                        left: -16px;
+                    }
+                }
+            }
+        }
+        > a {
+            span {
+                font-size: 11px;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .timeline_section_stack,
+    .timeline_section_stack_last {
+        grid-column: 2/3;
+        grid-row: span 1;
+        height: fit-content;
+        align-self: center;
+        grid-gap: 10px;
+        &:nth-of-type(even) {
+            grid-column: 1/2;
+        }
+    }
+
+    .timeline_section_stack_last {
+        grid-column: 1/3;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 12px;
+        &:nth-of-type(even) {
+            grid-column: 1/3;
+        }
+        .timeline_article {
+            grid-column: span 1;
+            height: 100%;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    body.route-governance-reports-activity-reports-overview section#main_page {
+        header.landing_header {
+            h2 {
+                padding-left: 75px;
+                font-size: 50px;
+            }
+        }
+    }
+    body.route-governance-reports-annual-report-show #main_page {
+        h2 {
+            margin-bottom: 0;
+            font-size: 36px;
+            padding-top: 10px;
+            padding-bottom: 0;
+            grid-row: 1/2;
+            align-self: flex-end;
+        }
+    }
+    #annual_reports_listing,
+    #world_congress_reports_listing {
+        padding-top: 20px;
+        > h3 {
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+    }
+    #annual_reports_listing {
+        padding-left: 70px;
+        padding-right: 25px;
+        padding-top: 0;
+    }
+    #world_congress_reports_listing {
+        padding-right: 50px;
+        padding-left: 25px;
+        padding-top: 30px;
+    }
+    article.card-activityreport_congress {
+        margin-top: 15px;
+        padding: 10px 15px 15px 15px;
+        > figure {
+            height: 30vw;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        header {
+            h4 {
+                font-size: 16px;
+            }
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+    article.card_annual_report {
+        margin-top: 15px;
+        grid-template-columns: 1fr 2fr;
+        height: 20vw;
+        h4 {
+            font-size: 25px;
+        }
+    }
+
+    article.card-video {
+        grid-template-rows: 40px calc((100vw - 140px) / 1.9 / 2) auto;
+        header {
+            grid-template-rows: 40px calc((100vw - 140px) / 1.9 / 2) auto;
+            h3 {
+                font-size: 1.2rem !important;
+            }
+            span.first-collection {
+            }
+        }
+        div.video-embed-container {
+            height: calc((100vw - 140px) / 1.9 / 2);
+        }
+        div.card-blurb {
+            p {
+                font-size: 0.95rem;
+            }
+        }
+    }
+    .annual_report_summary {
+        padding-right: 25px;
+        h3 {
+            font-size: 32px;
+            line-height: 36px;
+            text-align: right;
+            text-transform: capitalize;
+            max-width: 31%;
+            margin-left: auto;
+            align-self: flex-start;
+            padding-top: 40px;
+            padding-right: 20px;
+            grid-row: 2/4;
+            font-style: italic;
+        }
+        .summary-text {
+            p {
+                font-size: 14px;
+                line-height: 18px;
+            }
+            .summary-text-blurb {
+                grid-template-rows: 1fr auto auto;
+                grid-column-gap: 30px;
+                grid-template-columns: 1fr 1fr;
+                > h3 {
+                    font-size: 24px;
+                    line-height: 32px;
+                    text-align: left;
+                    max-width: 100%;
+                    margin-left: 0;
+                    padding-top: 020px;
+                    grid-row: 2/3;
+                    grid-column: 1/2;
+                    align-self: flex-end;
+                }
+                p {
+                    max-width: 100%;
+                    &:first-of-type {
+                        font-size: 18px !important;
+                        padding-bottom: 10px;
+                        padding-top: 10px;
+                    }
+                    &:last-of-type {
+                        margin-bottom: 20px;
+                    }
+                }
+                figure.video,
+                figure.figure_card {
+                    grid-row: 1/5;
+                    grid-column: 2/3;
+                    padding-right: 0;
+                }
+                figure.figure_portrait {
+                    grid-row: 1/4;
+                    grid-column: 2/3;
+                    justify-self: center;
+                    width: 100%;
+                    height: calc(40vw * 3 / 5);
+                    margin: 0;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+        > a {
+            margin-top: 0;
+        }
+    }
+    .summary-text-full {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto 1fr;
+        grid-column-gap: 35px;
+        margin-top: 10px;
+
+        figure {
+            grid-column: 1/2;
+            grid-row: 1/2;
+            margin-right: 0;
+            padding-right: 0;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        h3 {
+            text-transform: unset;
+            grid-row: span 1;
+            font-size: 14px;
+            color: #333;
+            max-width: unset;
+            margin-left: 0;
+            text-align: left;
+            padding-top: 0;
+            padding-bottom: 0;
+            margin: 0;
+            font-style: normal;
+        }
+        p {
+            font-size: 14px !important;
+            line-height: 18px !important;
+        }
+        ul,
+        ol {
+            li {
+                font-size: 14px !important;
+                line-height: 18px !important;
+            }
+        }
+        .column:first-of-type {
+            grid-column: 1/2;
+            grid-row: 2/3;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .column:last-child {
+            grid-column: 2/3;
+            grid-row: 1/3;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+    }
+    .timeline_section {
+        grid-gap: 30px;
+        grid-row-gap: 10px;
+        margin-bottom: 40px;
+        > h3,
+        > h4 {
+            font-size: 20px;
+            margin-bottom: 0px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    }
+    .timeline_section_stack,
+    .timeline_section_stack_last {
+        grid-gap: 15px;
+        .timeline_article {
+            padding: 15px;
+            span.date {
+                font-size: 12.5px;
+                margin-bottom: 5px;
+            }
+            h4,
+            h5 {
+                font-size: 16px;
+                line-height: 18px;
+            }
+            p {
+                font-size: 12.5px;
+                line-height: 18px;
+            }
+            > a {
+                margin-bottom: 0;
+                span {
+                    margin-top: 15px;
+                    margin-bottom: 0;
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+    .timeline_article.timeline_article_featured {
+        padding-bottom: 15px;
+        > span {
+            font-size: 12.5px;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        h4,
+        h5 {
+            font-size: 16px;
+            line-height: 18px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        p {
+            font-size: 12.5px;
+            line-height: 18px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        > a {
+            margin-left: 15px;
+            margin-bottom: 0;
+            span {
+                margin-top: 15px;
+                margin-left: 0px;
+                margin-bottom: 0;
+                padding: 10px 15px;
+            }
+        }
+    }
+}
+@media screen and (min-width: 1448px) {
+    body.route-governance-reports-activity-reports-overview {
+        section#main_page {
+            header.landing_header {
+                h2 {
+                    font-size: 72px;
+                }
+            }
+        }
+    }
+    body.route-governance-reports-annual-report-show {
+        #main_page {
+            h2 {
+                font-size: 40px;
+            }
+        }
+    }
+    #annual_reports_listing,
+    #world_congress_reports_listing {
+        > h3 {
+            font-size: 25px;
+        }
+        p {
+            font-size: 15px;
+        }
+    }
+
+    #annual_reports_listing {
+        padding-right: 30px;
+    }
+    #world_congress_reports_listing {
+        padding-left: 30px;
+    }
+    article.card-activityreport_congress {
+        margin-top: 20px;
+        padding: 15px 20px 20px 20px;
+        header {
+            h4 {
+                font-size: 32px;
+                margin-bottom: 5px;
+            }
+            span {
+                font-size: 14px;
+            }
+        }
+        > figure {
+            height: calc(1448px / 4);
+        }
+    }
+    article.card_annual_report {
+        margin-top: 20px;
+        height: calc(1448px / 5);
+        h4 {
+            font-size: 36px;
+        }
+    }
+    article.card-video {
+        grid-template-rows: 30px calc(((1448px - 85px) / 1.9 / 3)) auto;
+        header {
+            grid-template-rows: 30px calc(((1448px - 85px) / 1.9 / 3)) auto;
+            span.first-collection {
+                margin-top: 15px !important;
+            }
+            h3 {
+                margin-top: 0 !important;
+            }
+        }
+        div.video-embed-container {
+            height: calc(((1448px - 85px) / 1.9 / 3));
+        }
+    }
+    article.show-fulltext {
+        .summary-text-full {
+            grid-column-gap: 50px;
+            figure {
+                margin-bottom: 30px;
+                &.video {
+                    figcaption {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+    .annual_report_summary {
+        .summary-text {
+            p {
+                max-width: unset;
+                font-size: 15px !important;
+                line-height: 24px !important;
+                margin-right: 0;
+            }
+            .summary-text-blurb {
+                grid-column-gap: 50px;
+                h3 {
+                    font-size: 25px;
+                    max-width: unset;
+                    padding-top: 20px;
+                    padding-right: 40px;
+                    padding-bottom: 0px;
+                    line-height: 48px;
+                }
+                p {
+                    font-size: 15px;
+                    line-height: 24px;
+                    margin-right: 0;
+                }
+                p:first-of-type {
+                    font-size: 20px !important;
+                    padding-bottom: 15px;
+                    padding-top: 20px;
+                }
+                p:last-of-type {
+                    margin-bottom: 20px;
+                }
+                figure.figure_portrait {
+                }
+            }
+            .summary-text-full {
+                grid-column-gap: 50px;
+                h3 {
+                    font-size: 16px;
+                }
+                ol,
+                ul {
+                    li {
+                        font-size: 16px;
+                        line-height: 20px;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+        > a {
+            margin-top: 15px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            span {
+                font-size: 14px;
+                padding: 12px 18px;
+            }
+        }
+    }
+
+    .timeline_section {
+        grid-column-gap: 50px;
+        > h3,
+        > h4 {
+            font-size: 24px;
+
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+    .timeline_article {
+        &.timeline_article_featured {
+            _grid-gap: 5px;
+            padding-bottom: 25px;
+            figure {
+                margin-bottom: 20px;
+            }
+            > span {
+                padding-left: 25px;
+                font-size: 15px;
+            }
+            h4,
+            h5 {
+                padding-left: 25px;
+                padding-right: 25px;
+                font-size: 20px;
+                line-height: 24px;
+            }
+            p {
+                padding-left: 25px;
+                padding-right: 25px;
+                font-size: 15px;
+                line-height: 20px;
+            }
+            > a {
+                margin-top: 15px;
+                margin-left: 25px;
+                margin-bottom: 0;
+                font-size: 14px;
+                padding: 0;
+                span {
+                    font-size: 14px;
+                    padding: 12px 18px;
+                    display: block;
+                    margin: 0;
+                }
+            }
+            &.visible {
+                &.timeline_article_featured_left {
+                    &::after {
+                        right: -34px;
+                    }
+                }
+            }
+            &.visible {
+                &.timeline_article_featured_right {
+                    &::after {
+                        left: -26px;
+                    }
+                }
+            }
+        }
+    }
+    .timeline_section_stack,
+    .timeline_section_stack_last {
+        .timeline_article {
+            padding: 25px;
+            grid-gap: 5px;
+            span.date {
+                font-size: 15px;
+            }
+            h4,
+            h5 {
+                font-size: 20px;
+                line-height: 24px;
+            }
+            p {
+                font-size: 15px;
+                line-height: 20px;
+            }
+            > a {
+                margin-top: 15px;
+                margin-bottom: 0;
+                font-size: 14px;
+                padding: 0;
+                span {
+                    font-size: 14px;
+                    padding: 12px 18px;
+                    display: block;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

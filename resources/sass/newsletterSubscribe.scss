@@ -1,0 +1,675 @@
+div.subscribe-carousel {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 20px;
+    justify-content: center;
+    background-color: #0079b4;
+    background-image: linear-gradient(
+        to left bottom,
+        #0079b4,
+        #0086b5,
+        #0091b1,
+        #009ba8,
+        #03a49d
+    );
+    border-radius: 15px;
+    > div {
+        grid-column: 1/2;
+        grid-row: 1/2;
+        padding: 15px;
+        display: none;
+        width: 100%;
+        &.active {
+            display: block;
+        }
+    }
+    div.subscribe-carousel-start {
+        position: relative;
+        display: none;
+        align-content: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        h3 {
+            color: white;
+            grid-column: 1/2;
+            grid-row: 1/2;
+            margin-bottom: 5px;
+        }
+        p {
+            position: relative;
+            display: block;
+            color: white;
+            grid-column: 1/2;
+            grid-row: 2/3;
+            font-size: 18px;
+        }
+        &.active {
+            display: grid;
+        }
+    }
+
+    div.subscribe-carousel-form {
+        position: relative;
+        display: none;
+        align-content: center;
+        justify-content: center;
+        width: 100%;
+        height: fit-content;
+
+        box-sizing: border-box;
+        padding-top: 30px;
+        padding-bottom: 35px;
+        h3 {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+            grid-column: 1/3;
+            color: white;
+        }
+        p {
+            position: relative;
+            display: block;
+            grid-column: 1/3;
+            color: white;
+            font-size: 15px;
+            margin-top: 0;
+        }
+        form {
+            grid-column: 1/3;
+            position: relative;
+            display: block;
+            width: 100%;
+            label {
+                position: relative;
+                display: block;
+                span {
+                    position: relative;
+                    display: block;
+                    color: white;
+                    font-size: 12px;
+                    font-weight: 700;
+                    margin-bottom: 5px;
+                }
+                input {
+                    position: relative;
+                    display: block;
+                    width: 100%;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                }
+            }
+            button {
+                position: relative;
+                display: block;
+                width: fit-content;
+                padding: 5px 15px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                border: none;
+                background-color: aliceblue;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-size: 15px;
+                color: #0079b4;
+                font-weight: 400;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            a {
+                display: block;
+                margin-top: 15px;
+                font-size: 12px;
+                color: white;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+        &.active {
+            display: grid;
+        }
+    }
+    div.subscribe-carousel-result-success {
+        p {
+            font-size: 18px;
+            color: white;
+        }
+        &.active {
+            display: grid;
+        }
+    }
+    div.subscribe-carousel-result-error {
+        p {
+            position: relative;
+            display: block;
+            width: 100%;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+        button {
+            padding: 0;
+            margin: auto;
+            justify-self: center;
+            background-color: transparent;
+            border: none;
+            color: white;
+            text-decoration: underline;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            margin-top: 0;
+            text-decoration: underline;
+            &:hover {
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+    @media screen and (min-width: 748px) {
+        width: 100%;
+        margin: 0px;
+        grid-column: 2/3;
+        grid-row: 2/6;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        transition: box-shadow 500ms ease-in-out;
+        &:hover {
+            cursor: pointer;
+            box-shadow: -3px 0 5px #555;
+        }
+        > div {
+            padding: 25px !important;
+        }
+        div.subscribe-carousel-start {
+            h3 {
+                font-size: 24px !important;
+                margin-bottom: 10px;
+            }
+            p {
+                font-size: 18px;
+            }
+        }
+        div.subscribe-carousel-form {
+            padding-right: 20px;
+            h3 {
+                font-size: 24px !important;
+                margin-top: 0 !important;
+                margin-bottom: 5px !important;
+            }
+            p {
+                font-size: 16px !important;
+            }
+            form {
+                label {
+                    input {
+                        padding: 5px 12px;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+        div.subscribe-carousel-result-success {
+            p {
+                font-size: 20px !important;
+                height: fit-content;
+                align-self: center;
+            }
+        }
+        div.subscribe-carousel-result-error {
+            align-self: center;
+            p {
+                font-size: 24px !important;
+            }
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        > div {
+            padding: 40px !important;
+            padding-right: 60px !important;
+            grid-template-columns: 1fr;
+        }
+        div.subscribe-carousel-start {
+            h3 {
+                font-size: 30px;
+                margin-bottom: 0;
+            }
+            p {
+                _font-size: 28px;
+                padding-top: 10px !important;
+            }
+        }
+
+        div.subscribe-carousel-result-error {
+            align-self: center;
+            p {
+                font-size: 24px !important;
+                _padding-top: 0;
+            }
+            button {
+                font-size: 18px;
+            }
+        }
+    }
+    @media screen and (min-width: 1448px) {
+        grid-row: 1/6;
+        margin-top: 20px;
+        div.subscribe-carousel-start {
+            h3 {
+                margin-top: 0;
+                font-size: 32px !important;
+            }
+            p {
+                font-size: 20px !important;
+                margin-bottom: 0;
+            }
+        }
+        div.subscribe-carousel-form {
+            padding-right: 20px;
+
+            width: 100%;
+            align-self: center;
+            h3 {
+                font-size: 30px !important;
+                margin-top: 0 !important;
+                margin-bottom: 5px !important;
+            }
+            p {
+                font-size: 20px !important;
+                padding-top: 10px;
+                margin-bottom: 15px !important;
+            }
+            form {
+                label {
+                    input {
+                        padding: 8px 12px;
+                        margin-bottom: 10px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        div.subscribe-carousel-result-success {
+            p {
+                font-size: 32px !important;
+                height: fit-content;
+                align-self: center;
+                padding-top: 0 !important;
+            }
+        }
+        div.subscribe-carousel-result-error {
+            p {
+                font-size: 32px !important;
+            }
+            button {
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+body.route-contact-newsletter {
+    #main_page {
+        article.article_main {
+            padding-left: 20px;
+            padding-right: 25px;
+            background-color: white;
+            padding-bottom: 0;
+            header {
+                h2 {
+                    font-size: 24px;
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                }
+            }
+            p {
+                font-size: 16px;
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+        }
+        section {
+            position: relative;
+            display: block;
+            padding: 20px;
+            h2 {
+                font-size: 24px;
+                margin-top: 0;
+            }
+            form {
+                div#form_root {
+                    display: grid;
+                    grid-gap: 10px;
+                    > h3 {
+                        font-size: 20px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                    }
+                    > label {
+                        position: relative;
+                        display: grid;
+                        grid-gap: 10px;
+                        border: 1px #ccc solid;
+                        padding-bottom: 20px;
+                        margin-bottom: 10px;
+                        border-radius: 5px;
+                        overflow: hidden;
+                        background-color: aliceblue;
+                        h4 {
+                            position: relative;
+                            display: block;
+                            grid-row: 1/2;
+                            padding: 0px 10px;
+                            margin: 0;
+                            margin-top: 10px;
+                            grid-column: 1/3;
+                        }
+                        img {
+                            position: relative;
+                            display: block;
+                            grid-row: 2/3;
+                            grid-column: 1/3;
+                            margin-bottom: 10px;
+                            border-radius: 5px;
+                        }
+                        p {
+                            position: relative;
+                            display: block;
+                            grid-row: 3/4;
+                            grid-column: 1/3;
+                            padding: 0px 10px;
+                            margin: 0;
+                            font-size: 16px;
+                        }
+                        input {
+                            margin: 0px 10px;
+                            grid-row: 4/5;
+                            width: 20px;
+                            height: 20px;
+                            grid-column: 1/2;
+                        }
+                        span {
+                            padding: 0px 15px;
+                            grid-row: 4/5;
+                            margin-left: 25px;
+                            grid-column: 1/2;
+                            font-weight: 700;
+                            color: #0079b4;
+                        }
+                        &.newsletter_agree {
+                            border: none;
+                            border-radius: none;
+                            grid-template-columns: 15px auto;
+                            padding-top: 10px;
+                            padding-bottom: 12px;
+                            margin-bottom: 0;
+                            input {
+                                grid-row: 1/2;
+                                grid-column: 1/2;
+                            }
+                            span {
+                                grid-row: 1/2;
+                                grid-column: 2/3;
+                                margin: 0;
+                                padding: 0;
+                                padding-left: 15px;
+                            }
+                        }
+                        & + h3 {
+                            margin-top: 20px;
+                        }
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    div.MuiFormControl-root {
+                        position: relative;
+                        display: block;
+                        margin-top: 0;
+                        div.MuiInputBase-root {
+                            width: 100%;
+                            border: 1px #ccc solid;
+                            border-radius: 5px;
+                            input {
+                                padding-top: 20px;
+                                font-size: 16px;
+                                height: 40px;
+                            }
+                            div.MuiInputAdornment-root {
+                                margin-top: 16px;
+                                height: 40px !important;
+                            }
+                            div.MuiAutocomplete-root & {
+                                padding-top: 0 !important;
+                            }
+                        }
+                    }
+                    div.MuiAutocomplete-root {
+                        div.MuiFormControl-root {
+                            div.MuiInputBase-root {
+                                input {
+                                    padding-top: 0;
+                                }
+                            }
+                        }
+                    }
+                    > button {
+                        width: fit-content;
+                        min-width: 200px;
+                        padding: 10px 20px;
+                        color: white;
+                        background-color: #0079b4;
+                        grid-column: 1/2;
+                        font-weight: 700;
+                        &:hover {
+                            cursor: pointer;
+                            box-shadow: 0 2px 5px #555;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 748px) {
+        #main_page {
+            article.article_main {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                padding-left: 80px;
+                header {
+                    grid-column: 1/4;
+                }
+                p {
+                    grid-column: 1/3;
+                }
+            }
+            section {
+                padding-left: 80px;
+                padding-right: 40px;
+
+                form {
+                    div#form_root {
+                        grid-template-columns: repeat(2, 1fr);
+                        h3 {
+                            grid-column: 1/3;
+                        }
+                        > label {
+                            margin-bottom: 0;
+                            grid-auto-rows: max-content;
+                            &.newsletter_agree {
+                                grid-column: 1/3;
+                            }
+                        }
+                        > button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        #main_page {
+            article.article_main {
+                grid-template-columns: repeat(2, 1fr);
+                header {
+                    grid-column: 1/3;
+                }
+                p {
+                    grid-column: 1/2;
+                }
+            }
+            section {
+                form {
+                    div#form_root {
+                        grid-template-columns: repeat(3, 1fr);
+                        h3 {
+                            grid-column: 1/4;
+                        }
+                        > label {
+                            margin-bottom: 0;
+                        }
+                        > button {
+                            width: 100%;
+                            padding: 15px 20px;
+                            font-weight: 700;
+                        }
+                        p {
+                            grid-column: 1/3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1480px) {
+        #main_page {
+            article.article_main {
+                grid-template-columns: repeat(2, 1fr);
+                header {
+                    grid-column: 1/3;
+                    h2 {
+                        font-size: 32px;
+                        margin-bottom: 10px;
+                    }
+                }
+                p {
+                    grid-column: 1/2;
+                    font-size: 18px;
+                }
+            }
+            section {
+                h2 {
+                    font-size: 32px;
+                }
+                form {
+                    div#form_root {
+                        grid-template-columns: repeat(3, 1fr);
+                        h3 {
+                            grid-column: 1/4;
+                        }
+                        > label {
+                            margin-bottom: 0;
+                            h4 {
+                                font-size: 20px;
+                                margin-top: 15px;
+                                margin-bottom: 5px;
+                            }
+                            p {
+                                font-size: 16px;
+                                margin-bottom: 10px;
+                            }
+                        }
+                        > button {
+                            width: 100%;
+                            padding: 15px 20px;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+body.route-contact-newsletter-subscribe {
+    .wrapper {
+        min-height: 90vh;
+        article.article_main {
+            & + section {
+                height: 100%;
+                padding: 20px;
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                _min-height: 50vh;
+                grid-column-gap: 40px;
+                h2 {
+                    margin: auto;
+                    display: block;
+                    width: 100%;
+                    font-size: 40px;
+                    font-weight: 200;
+                    margin-bottom: 60px;
+                }
+                p {
+                    margin: auto;
+                    display: flex;
+                    width: 100%;
+                    background-color: color(srgb 0.1176 0.4183 0.6237);
+                    height: 100%;
+                    align-items: center;
+                    text-align: left;
+                    line-height: 1.2;
+                    a {
+                        display: block;
+                        width: auto;
+                        color: white !important;
+                        font-weight: 700;
+                        font-size: 24px;
+                        padding-left: 20px;
+                    }
+                }
+            }
+            @media screen and (min-width: 748px) {
+                & + section {
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr;
+                    padding-top: 0;
+                    padding-right: 0;
+                    padding-left: 80px;
+                    h2 {
+                        grid-row: 1/2;
+                        grid-column: 1/2;
+                        margin-top: auto;
+                        margin-bottom: auto;
+                    }
+                    p {
+                        grid-row: 1/2;
+                        grid-column: 2/3;
+                        text-align: center;
+                    }
+                }
+            }
+            @media screen and (min-width: 1448px) {
+                p {
+                    justify-self: center;
+                    margin: auto;
+                    a {
+                        font-size: 40px;
+                        width: auto;
+                        padding-left: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+img[alt="unknown"] {
+    opacity: 0 !important;
+}

@@ -1,0 +1,1 @@
+import{j as t}from"./client-ZKQMN23D.js";import{B as x}from"./Box-CGz8vZlR.js";const i=({children:o,className:r})=>t.jsx(x,{className:r,sx:{paddingTop:"64px",height:"100vh",boxSizing:"border-box",overflowY:"auto"},children:o});export{i as C};
