@@ -63,3 +63,29 @@
     - subsite-region.blade.php
     - subsite-subcoll_cards.blade.php
     - subsite-worlds_of_education.blade.php
+15. v11-main-subsite\resources\views\components
+    - newsletter-signup-carousel-subsite.blade.php
+    - newsletter-signup-form-subsite.blade.php
+16. v11-main-subsite\resources\views\coop_projects
+    - subsite-listing.blade.php
+    - subsite-overview.blade.php
+17. v11-main-subsite\resources\views\errors
+    - deactive404.blade.php
+18. v11-main-subsite\resources\views\newsletter
+    - subsite-activecampaign_ar.blade.php
+    - subsite-activecampaign_en.blade.php
+    - subsite-activecampaign_es.blade.php
+    - subsite-activecampaign_fr.blade.php
+    - subsite-activecampaign_pt.blade.php
+19. v11-main-subsite\resources\views\shared
+    - subsite-card.blade.php
+    - subsite-carousel.blade.php
+    - subsite-language_selector.blade.php
+    - subsite-searchBar.blade.php
+20. v11-main-subsite\resources\views\shared\cards
+    - subsite-collection_bylaws.blade.php
+    - subsite-collection.blade.php
+    - subsite-dev_coop_project.blade.php
+    - subsite-item.blade.php
+    - subsite-library.blade.php
+
