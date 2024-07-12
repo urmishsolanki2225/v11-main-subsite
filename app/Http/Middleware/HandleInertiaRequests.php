@@ -5,7 +5,9 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
-use App\Actions\AllowedMembershipCollections;
+// Subsite section start
+use App\Actions\{AllowedMembershipCollections, FetchSubsite};
+// Subsite section end
 
 class HandleInertiaRequests extends Middleware
 {
@@ -58,6 +60,11 @@ class HandleInertiaRequests extends Middleware
                         "forceDeleteMany" => $request
                             ->user()
                             ->can("forceDeleteMany", Item::class),
+                        // Subsite section start
+                        "subsiteAdminAccess" => $request
+                            ->user()
+                            ->can("subsiteAdminAccess", Item::class),
+                        // Subsite section end
                     ],
                     "users" => [
                         "create" => $request
@@ -89,6 +96,15 @@ class HandleInertiaRequests extends Middleware
                         "forceDeleteMany" => $request
                             ->user()
                             ->can("forceDeleteMany", Collection::class),
+
+                        // Subsite section start
+                        "view" => $request
+                            ->user()
+                            ->can("view", Collection::class),
+                        "subsiteAdminAccess" => $request
+                            ->user()
+                            ->can("subsiteAdminAccess", Collection::class),
+                        // Subsite section end
                     ],
                     //Added by Cyblance for Annual-Reports section start
                     "annualreports" => [
@@ -106,9 +122,19 @@ class HandleInertiaRequests extends Middleware
                             ->can("forceDeleteMany", Annualreport::class),
                         "view" => $request
                             ->user()
-                            ->can('view', Annualreport::class),
+                            ->can("view", Annualreport::class),
                     ],
                     //Added by Cyblance for Annual-Reports section start
+                    // Subsite section start
+                    "subsiteadmin" => [
+                        "create" => $request
+                            ->user()
+                            ->can("create", Subsite::class),
+                        "canShareAccess" => $request
+                            ->user()
+                            ->can("canShareAccess", Subsite::class),
+                    ],
+                    // Subsite section end
                 ]
                 : [],
             "user" => $request->user(),
@@ -119,6 +145,9 @@ class HandleInertiaRequests extends Middleware
                     ),
                 ]
                 : [],
+            // Subsite section start
+            "subsite" => FetchSubsite::execute($request),
+            // Subsite section end
             "session_lifetime" => config("session.lifetime") * 1,
         ]);
     }

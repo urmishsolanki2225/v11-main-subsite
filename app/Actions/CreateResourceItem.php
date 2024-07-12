@@ -11,6 +11,9 @@ use App\Models\ResourceFile;
 use App\Models\ResourceEmbed;
 use Carbon\Carbon;
 //Added by Cyblance for Annual-Reports section end
+// Subsite section start
+use App\Models\Subsite;
+// Subsite section end
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -21,6 +24,9 @@ class CreateResourceItem
     public function execute(Request $request)
     {
         $subtype = $request->input("subtype");
+        // Subsite section start
+        $request["role"] = $request->user();
+        // Subsite section end
         switch ($subtype) {
             case "link":
                 return $this->createLink($request->all());
@@ -185,15 +191,30 @@ class CreateResourceItem
 
     public function createItemAndContents($data)
     {
+        // Subsite section start
+        $is_site = 1;
+        if ($data["role"]->can("subsiteAdminAccess", Item::class)) {
+            $regionId = Subsite::where("id", $data["role"]->subsite_id)
+                ->pluck("region_id")
+                ->first();
+            $is_site = 2;
+        }
         $item = Item::create([
             "type" => "resource",
             "subtype" => $data["subtype"],
             "publish_at" => Carbon::now()->subMinute(1),
+            "is_site" => $is_site,
         ]);
+        // Subsite section end
         $title = $data["title"];
         if (!$title) {
             $title = "";
         }
+        // Subsite section start
+        if ($data["role"]->can("subsiteAdminAccess", Item::class)) {
+            $item->collections()->attach($regionId);
+        }
+        // Subsite section end
         return $item->contents()->create([
             "lang" => "*",
             "title" => $title,

@@ -92,6 +92,6 @@ return [
     "links" => [
         public_path("storage") => storage_path("app/public"),
         public_path("img_v") => storage_path("app/public/img_v"),
-        public_path("image") => storage_path("app/image"),
+        base_path("image") => storage_path("app/image"),
     ],
 ];

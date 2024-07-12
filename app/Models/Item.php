@@ -359,4 +359,53 @@ class Item extends Model implements Auditable
     {
         return $this->hasOne(ActivityReportCongress::class);
     }
+    // Subsite section start
+    public function relatedItemsSubsite()
+    {
+        // related collections
+        $is_site = ["2", "3"];
+        $items = [];
+        $ids = [$this->id];
+        $subdomain = getSubdomain();
+        $hostName = \Request::segment(2);
+        $region_data = Subsite::select("region_id")
+            ->where("aliase_name", $subdomain)
+            ->first();
+        $recordsAll = $this->collections->where(
+            "id",
+            "=",
+            $region_data->region_id
+        );
+
+        foreach ($recordsAll as $coll) {
+            $item = $coll
+                ->items()
+                ->whereIn("type", ["article", "static"])
+                ->whereIn("is_site", $is_site)
+                ->whereNotIn("items.id", $ids)
+                ->get();
+            foreach ($item as $itemVal) {
+                $ids[] = $itemVal->id;
+            }
+            if (!$item) {
+                continue;
+            }
+            if (count($ids) > 6) {
+                break;
+            }
+        }
+
+        $ids = array_slice($ids, 1);
+        $items = Item::whereIn("id", $ids)
+            ->with([
+                "content:id,title,slug,item_id,lang",
+                "images.content.images",
+                "collections",
+                "collections.content:id,title,slug,collection_id,lang",
+            ])
+            ->orderByRaw("COALESCE(publish_at, created_at) desc")
+            ->get();
+        return $items;
+    }
+    // Subsite section end
 }

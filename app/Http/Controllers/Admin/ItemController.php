@@ -34,11 +34,40 @@ use Illuminate\Support\Carbon;
 // use App\Actions\AssociateItemCollections;
 // use App\Actions\UpdateAttachmentGroups;
 
+// Subsite section start
+use App\Models\Subsite;
+use App\Filters\SubsiteCollectionFilter;
+// Subsite section end
+
 class ItemController extends Controller
 {
     public function index(Request $request)
     {
         $isInertia = $request->input("_format") != "json";
+
+        // Subsite section start
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            $getFilter = $request->all("filter");
+            if (
+                $getFilter["filter"] == "" ||
+                (isset($getFilter["filter"]["subsite.id"]) &&
+                    $getFilter["filter"]["subsite.id"] !=
+                        $request->user()->subsite_id) ||
+                (isset($getFilter["filter"]["type"]) &&
+                    $getFilter["filter"]["type"] == "dev_coop_project")
+            ) {
+                if (
+                    isset($getFilter["filter"]["type"]) &&
+                    $getFilter["filter"]["type"] == "dev_coop_project"
+                ) {
+                    return Inertia::render("Subsite/NotAuthorize");
+                }
+                return Redirect::back()->withErrors([
+                    "error" => "Not authorized",
+                ]);
+            }
+        }
+        // Subsite section end
 
         $items = QueryBuilder::for(Item::class)
             ->allowedFilters([
@@ -70,6 +99,12 @@ class ItemController extends Controller
                         fn($q) => $q->where("type", "workarea")
                     )
                 ),
+                // Subsite section start
+                AllowedFilter::custom(
+                    "subsite.id",
+                    new SubsiteCollectionFilter()
+                ),
+                // Subsite section end
                 AllowedFilter::trashed()->default("no"),
                 AllowedFilter::scope("published_after"),
                 AllowedFilter::scope("published_before"),
@@ -91,6 +126,21 @@ class ItemController extends Controller
             ->defaultSort("-created_at", "id")
             ->with(["contents:id,item_id,title,lang"])
             ->withoutGlobalScopes();
+
+        // Subsite section start
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            if (isset($request->filter["collection.id"])) {
+                $is_site = ["1", "2"];
+                $items = $items->whereIn("is_site", $is_site);
+            } else {
+                $is_site = ["2", "3"];
+                $items = $items->whereIn("is_site", $is_site);
+            }
+        } else {
+            $is_site = ["1", "3"];
+            $items = $items->whereIn("is_site", $is_site);
+        }
+        // Subsite section end
 
         if ($isInertia) {
             $items = $items->paginate(16)->appends(request()->query());
@@ -220,6 +270,9 @@ class ItemController extends Controller
         if ($request->user()->cannot("create", Item::class)) {
             return Redirect::back()->withErrors(["error" => "Not authorized"]);
         }
+        // Subsite section start
+        $role = auth()->user();
+        // Subsite section end
 
         $collection = false;
         if ($request->has("collection_id")) {
@@ -305,6 +358,43 @@ class ItemController extends Controller
         //     $result['dossier_'.$dossier->id] = Inertia::lazy(fn() => $dossier->subCollections);
         // }
 
+        // Subsite section start
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            $result["types"] = [
+                "article" => "Article",
+                "static" => "Page",
+                "resource" => "Resource",
+                "contact" => "Contact card",
+                "person" => "Person",
+                "library" => "Library",
+            ];
+            $result["collection_prepick"] = [
+                "default" => [],
+                "article" => [
+                    [
+                        "label" => "Latest",
+                        "filter" => [
+                            "id" => implode(",", [
+                                config("eiie.collection.news"),
+                                config("eiie.collection.opinion"),
+                                config("eiie.collection.take-action"),
+                                config("eiie.collection.statements"),
+                            ]),
+                        ],
+                        "mode" => "radio",
+                    ],
+                ],
+            ];
+        }
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            $get_regionId = Subsite::where("id", $role->subsite_id)
+                ->pluck("region_id")
+                ->first();
+            $result["roleregionId"] = $get_regionId;
+        }
+        $result["roleuser"] = $role;
+        // Subsite section end
+
         if ($collection) {
             $result["collection"] = $collection;
 
@@ -340,6 +430,11 @@ class ItemController extends Controller
 
         $create = $request->only(["type", "subtype"]);
         $create["status"] = "draft";
+        // Subsite section start
+        if ($request->user()->role == "subsiteadmin") {
+            $create["is_site"] = 2;
+        }
+        // Subsite section end
         $item = Item::create($create);
         $item->publish_at = Carbon::now()->subMinute(1);
         $languages = $request->input("languages");
@@ -407,7 +502,14 @@ class ItemController extends Controller
             $item->activityReportCongress()->create([]);
         }
         $item->push();
-
+        // Subsite section start
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            $regionId = Subsite::where("id", $request->user()->subsite_id)
+                ->pluck("region_id")
+                ->first();
+            $item->collections()->attach($regionId);
+        }
+        // Subsite section end
         return Redirect::route("admin.items.edit", $item)->with([
             "info" => "Item created",
         ]);
@@ -432,6 +534,23 @@ class ItemController extends Controller
 
         $patchAction->execute($item, $request->all());
         $item->refresh();
+
+        // Subsite section start
+        if ($request->user()->can("subsiteAdminAccess", Item::class)) {
+            $collections = $request->collections;
+            if (
+                (isset($collections[2][0]) &&
+                    isset($collections[2][0]["id"]) &&
+                    $collections[2][0]["id"] == 19) ||
+                (isset($collections[1][0]) &&
+                    isset($collections[1][0]["id"]) &&
+                    $collections[1][0]["id"] == 19)
+            ) {
+                $item->is_site = 3;
+            }
+        }
+        // Subsite section end
+
         foreach ($item->contents as $content) {
             $content->slug = Str::slug($content->title ? $content->title : "-");
             $renderBlurb = new RenderContent(
@@ -474,6 +593,12 @@ class ItemController extends Controller
         $this->authorize("forceDeleteMany", [Item::class]);
         $request->validate(["ids" => "required|array", "ids.*" => "numeric"]);
 
+        // Subsite section start
+        ItemContent::withoutGlobalScopes()
+            ->whereIn("item_id", $request->ids)
+            ->unsearchable();
+        // Subsite section end
+
         Item::withoutGlobalScopes()
             ->withTrashed()
 
@@ -495,6 +620,12 @@ class ItemController extends Controller
         $this->authorize("deleteMany", [Item::class]);
         $request->validate(["ids" => "required|array", "ids.*" => "numeric"]);
 
+        // Subsite section start
+        ItemContent::withoutGlobalScopes()
+            ->whereIn("item_id", $request->ids)
+            ->unsearchable();
+        // Subsite section end
+
         Item::withoutGlobalScopes()
             ->whereIn("id", $request->ids)
             ->delete();
@@ -513,6 +644,12 @@ class ItemController extends Controller
 
         $this->authorize("restoreMany", [Item::class]);
         $request->validate(["ids" => "required|array", "ids.*" => "numeric"]);
+
+        // Subsite section start
+        ItemContent::whereIn("item_id", $request->ids)
+            ->with(["item" => fn($query) => $query->withTrashed()])
+            ->searchable();
+        // Subsite section end
 
         Item::withoutGlobalScopes()
             ->withTrashed()
@@ -533,11 +670,29 @@ class ItemController extends Controller
         $type = $item->type;
         $succesMessage = item_success_message($type, $item->subtype);
         $item->forceDelete();
-        return redirect()
-            ->route("admin.items.index", [
-                "filter" => ["type" => $type],
-            ])
-            ->with(["info" => $succesMessage . " permanently deleted"]);
+
+        // Subsite section start
+        ItemContent::withoutGlobalScopes()
+            ->where("item_id", $id)
+            ->unsearchable();
+        $role = auth()->user();
+        if ($role->role == "subsiteadmin") {
+            return redirect()
+                ->route("admin.items.index", [
+                    "filter" => [
+                        "type" => $type,
+                        "subsite.id" => $role->subsite_id,
+                    ],
+                ])
+                ->with(["info" => $succesMessage . " permanently deleted"]);
+        } else {
+            return redirect()
+                ->route("admin.items.index", [
+                    "filter" => ["type" => $type],
+                ])
+                ->with(["info" => $succesMessage . " permanently deleted"]);
+        }
+        // Subsite section end
     }
 
     public function trash($id)
@@ -548,6 +703,11 @@ class ItemController extends Controller
         $this->authorize("delete", $item);
         $succesMessage = item_success_message($item->type, $item->subtype);
         $item->delete();
+        // Subsite section start
+        ItemContent::withoutGlobalScopes()
+            ->where("item_id", $id)
+            ->unsearchable();
+        // Subsite section end
         return redirect()
             ->back()
             ->with(["info" => $succesMessage . " moved to trash."]);
@@ -561,6 +721,11 @@ class ItemController extends Controller
         $this->authorize("restore", $item);
         $succesMessage = item_success_message($item->type, $item->subtype);
         $item->restore();
+        // Subsite section start
+        ItemContent::where("item_id", $id)
+            ->with(["item" => fn($query) => $query->withTrashed()])
+            ->searchable();
+        // Subsite section end
         return redirect()
             ->back()
             ->with(["info" => $succesMessage . " restored."]);

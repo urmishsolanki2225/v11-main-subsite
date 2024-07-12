@@ -148,8 +148,17 @@ class CoopProjectController extends Controller
             ->orderBy("year_end")
             ->paginate()
             ->appends(request()->query());
+        // Subsite section start
+        $subdomain = getSubdomain();
+        if ($subdomain) {
+            $view = "subsite-listing";
+        } else {
+            $view = "listing";
+        }
+        $region_data = Subsite::where("aliase_name", $subdomain)->first();
 
-        return view("coop_projects/listing", [
+        return view("coop_projects/" . $view, [
+            // Subsite section end
             "taxonomy" => $taxonomy,
             "projects" => $projects,
             "filters" => $filters,
@@ -269,13 +278,24 @@ class CoopProjectController extends Controller
             config("eiie.item.dev_coop_project_intro")
         );
 
-        return view("coop_projects/overview", [
+        // Subsite section start
+        $subdomain = getSubdomain();
+        if ($subdomain) {
+            $view = "subsite-overview";
+        } else {
+            $view = "overview";
+        }
+        $region_data = Subsite::where("aliase_name", $subdomain)->first();
+
+        return view("coop_projects/" . $view, [
             "taxonomy" => $taxonomy,
             "projects" => $currentProjects,
             "filters" => $filters,
             "map_data" => $mapData,
             "intro_item" => $introItem,
+            "subsitedata" => $region_data,
         ]);
+        // Subsite section end
     }
 
     /**

@@ -4,8 +4,11 @@ use App\Models\SocialMedia;
 use GuzzleHttp\Client;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Carbon\Carbon;
-
 // Add By cyblance For sharing end
+// Subsite section start
+use App\Models\Subsite;
+use App\Models\Collection;
+// Subsite section end
 
 //Added code separated success messege for each type  by Cyblance start
 function item_success_message($type, $subtype = null)
@@ -213,3 +216,85 @@ function get_social_access_token($name)
     return $get_token;
 }
 /* Add By cyblance For sharing end */
+
+// Subsite section start
+function getSubdomain()
+{
+    $host = null;
+    if (isset($_SERVER["HTTP_HOST"]) && !empty($_SERVER["HTTP_HOST"])) {
+        $host = $_SERVER["HTTP_HOST"];
+    }
+    if ($host) {
+        $subdomain = join(".", explode(".", $_SERVER["HTTP_HOST"], -2));
+        return $subdomain;
+    }
+}
+function get_subsite_lang()
+{
+    $subdomain = getSubdomain();
+    $lang = Subsite::select("languages", "aliase_name")
+        ->where("aliase_name", $subdomain)
+        ->first();
+    return $lang;
+}
+function getOpinion_subsite()
+{
+    $subdomain = getSubdomain();
+    $region_data = Subsite::select("region_id")
+        ->where("aliase_name", $subdomain)
+        ->first();
+    $collection = \App\Models\Collection::with(["images.content.images"])
+        ->withCount(["subCollections"])
+        ->findOrFail($region_data->region_id);
+
+    $items = $collection
+        ->subsite_items()
+        ->with([
+            "content",
+            "images",
+            "images.content.images",
+            "collections",
+            "collections.content:id,title,slug,collection_id,lang",
+            "collections.parentCollections",
+        ])
+        ->where("type", "article")
+        ->take(3)
+        ->get();
+    return $items;
+}
+function getprefix_id($campaigns)
+{
+    $subdomain = getSubdomain();
+    if (isset($campaigns[$subdomain])) {
+        $campaignValue = $campaigns[$subdomain];
+    } else {
+        $campaignValue = "";
+    }
+    return $campaignValue;
+}
+
+function officeAddress()
+{
+    $getSubdomain = getSubdomain();
+    $addressId = config("eiie.collection.contact-offices-subsite");
+    $addressId = $addressId[$getSubdomain];
+
+    $collection = Collection::findOrFail($addressId);
+
+    $office = $collection
+        ->subsite_items()
+        ->with([
+            "collections",
+            "collections.content:id,title,slug,collection_id,lang",
+        ])
+        ->where("type", "contact")
+        ->get();
+    // $office = $office->whereHas(
+    //     "collections.content",
+    //     // function ($query){
+    //     //     $query->where("collection_id", $this->subsites['subsites']->region_id);
+    //     // },
+    // );
+    return $office;
+}
+// Subsite section end

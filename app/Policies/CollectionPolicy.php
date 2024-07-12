@@ -42,7 +42,11 @@ class CollectionPolicy
     public function create(User $user, $type = "")
     {
         // only authors are allowed to be created by non-admin
-        return $user->role == "admin" || $type == "author";
+        // Subsite section start
+        return $user->role == "admin" ||
+            $user->role == "subsiteadmin" ||
+            $type == "author";
+        // Subsite section end
     }
 
     public function createLimited(User $user)
@@ -59,8 +63,12 @@ class CollectionPolicy
      */
     public function update(User $user, Collection $collection)
     {
-        //
-        return true;
+        // Subsite section start
+        return $user->role == "admin" ||
+            $user->role == "editor" ||
+            ($user->role == "subsiteadmin" &&
+                in_array($collection->is_site, [2, 3]));
+        // Subsite section end
     }
 
     /**
@@ -72,7 +80,11 @@ class CollectionPolicy
      */
     public function delete(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        // Subsite section start
+        return $user->role == "admin" ||
+            ($user->role == "subsiteadmin" &&
+                in_array($collection->is_site, [2, 3]));
+        // Subsite section end
     }
 
     /**
@@ -84,7 +96,11 @@ class CollectionPolicy
      */
     public function restore(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        // Subsite section start
+        return $user->role == "admin" ||
+            ($user->role == "subsiteadmin" &&
+                in_array($collection->is_site, [2, 3]));
+        // Subsite section end
     }
 
     /**
@@ -96,21 +112,26 @@ class CollectionPolicy
      */
     public function forceDelete(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        // Subsite section start
+        return $user->role == "admin" ||
+            ($user->role == "subsiteadmin" &&
+                in_array($collection->is_site, [2, 3]));
+        // Subsite section end
     }
-
+    // Subsite section start
     public function deleteMany(User $user)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || $user->role == "subsiteadmin";
     }
 
     public function restoreMany(User $user)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || $user->role == "subsiteadmin";
     }
 
     public function forceDeleteMany(User $user)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || $user->role == "subsiteadmin";
     }
+    // Subsite section end
 }

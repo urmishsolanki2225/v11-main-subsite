@@ -111,4 +111,11 @@ class UserPolicy
     {
         return $user->role == "admin";
     }
+
+    // Subsite section start
+    public function updateSubsite(User $user, User $model)
+    {
+        return $user->role == "admin" && $user->id != $model->id;
+    }
+    // Subsite section end
 }

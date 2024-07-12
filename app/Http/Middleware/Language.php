@@ -18,7 +18,23 @@ class Language
      */
     public function handle(Request $request, Closure $next)
     {
-        $locales = config("app.locales");
+        // Subsite section start
+        $lang = get_subsite_lang();
+        $locales = [];
+
+        if (
+            isset($lang->languages) &&
+            $lang->languages != "" &&
+            $lang->languages != "*"
+        ) {
+            $langs = explode(",", $lang->languages);
+            $subsiteLocales = config("app.subsite-locales");
+            $locales = array_intersect_key($subsiteLocales, array_flip($langs));
+        } else {
+            $defaultLocales = config("app.locales");
+            $locales = $defaultLocales;
+        }
+        // Subsite section end
 
         // Check if the first segment matches a language code
         if (!array_key_exists($request->segment(1), $locales)) {
@@ -36,7 +52,11 @@ class Language
             }
             // Redirect to the correct url
             URL::defaults(["locale" => $segments[0]]);
-            return redirect()->to(implode("/", $segments));
+            // Subsite section start
+            $languages = explode(",", $lang->languages);
+            $firstLanguage = $languages[0];
+            return redirect()->to($firstLanguage);
+            // Subsite section end
         } else {
             App::setLocale($request->segment(1));
         }

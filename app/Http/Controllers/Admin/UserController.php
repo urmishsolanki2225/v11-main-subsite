@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Password;
-
-use App\Models\User;
-
+// Subsite section start
+use App\Models\{User, Subsite};
+// Subsite section end
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -35,7 +35,7 @@ class UserController extends Controller
                 AllowedFilter::exact("type"),
                 AllowedFilter::exact("subtype"),
                 // Added by Cyblance for search by id in listing start
-                AllowedFilter::custom('search', new SearchUserFilter),
+                AllowedFilter::custom("search", new SearchUserFilter()),
                 // AllowedFilter::partial("search", "name"),
                 // Added by Cyblance for search by id in listing end
                 AllowedFilter::exact("role"),
@@ -69,6 +69,11 @@ class UserController extends Controller
             return Redirect::back()->withErrors(["error" => "Not authorized"]);
         }
 
+        // Subsite section start
+        $subsites = Subsite::where("is_active", "active")->get();
+        $get_subsite = $subsites->pluck("name", "id")->toArray();
+        // Subsite section end
+
         $data = [
             "userModel" => $user,
             "can" => [
@@ -76,8 +81,22 @@ class UserController extends Controller
                     "update" => $request->user()->can("updateRole", $user),
                 ],
                 "user" => ["delete" => $request->user()->can("delete", $user)],
+                // Subsite section start
+                "subsite" => [
+                    "updateSubsite" => $request
+                        ->user()
+                        ->can("updateSubsite", $user),
+                ],
+                // Subsite section end
             ],
-            "roles" => ["editor" => "Editor", "admin" => "Admin"],
+            // Subsite section start
+            "roles" => [
+                "editor" => "Editor",
+                "admin" => "Admin",
+                "subsiteadmin" => "Subsite Admin",
+            ],
+            "subsite_edit" => [$get_subsite],
+            // Subsite section end
         ];
         $sharedCan = Inertia::getShared("can");
         if ($sharedCan) {
@@ -93,9 +112,19 @@ class UserController extends Controller
             return Redirect::back()->withErrors(["error" => "Not authorized"]);
         }
 
+        // Subsite section start
+        $subsites = Subsite::where("is_active", "active")->get();
+        $get_subsite = $subsites->pluck("name", "id")->toArray();
+
         return Inertia::render("Users/Create", [
-            "roles" => ["editor" => "Editor", "admin" => "Admin"],
+            "roles" => [
+                "editor" => "Editor",
+                "admin" => "Admin",
+                "subsiteadmin" => "Subsite Admin",
+            ],
+            "get_subsite" => $get_subsite,
         ]);
+        // Subsite section end
     }
 
     public function store(Request $request)
@@ -109,8 +138,11 @@ class UserController extends Controller
             "role" => "required",
             "email" => ["required", "email", Rule::unique("users")],
         ]);
-
-        $create = $request->only(["name", "email", "role"]);
+        // Subsite section start
+        $subsite_id = (string) $request->subsite_id;
+        $request->subsite_id = $subsite_id;
+        $create = $request->only(["name", "email", "role", "subsite_id"]);
+        // Subsite section end
         $create["password"] = Str::random(12);
         $user = User::create($create);
 
@@ -149,6 +181,16 @@ class UserController extends Controller
             }
             $user->role = $request->input("role");
         }
+        // Subsite section start
+        if (
+            $request->has("subsite_id") &&
+            $request->input("subsite_id") != null
+        ) {
+            $user->subsite_id = $request->input("subsite_id");
+        } else {
+            $user->subsite_id = null;
+        }
+        // Subsite section end
         $user->save();
 
         return Redirect::route("admin.users.edit", $user)->with([
@@ -180,7 +222,9 @@ class UserController extends Controller
             ->whereIn("id", $request->ids)
             ->forceDelete();
 
-        return redirect()->back()->with(["info" => "Users deleted"]);
+        return redirect()
+            ->back()
+            ->with(["info" => "Users deleted"]);
     }
 
     public function trashMultiple(Request $request)
@@ -192,7 +236,9 @@ class UserController extends Controller
             ->whereIn("id", $request->ids)
             ->delete();
 
-            return redirect()->back()->with(["info" => "Users moved to trash"]);
+        return redirect()
+            ->back()
+            ->with(["info" => "Users moved to trash"]);
     }
 
     public function restoreMultiple(Request $request)
@@ -205,7 +251,9 @@ class UserController extends Controller
             ->whereIn("id", $request->ids)
             ->restore();
 
-        return redirect()->back()->with(["info" => "Users restored"]);
+        return redirect()
+            ->back()
+            ->with(["info" => "Users restored"]);
     }
 
     public function destroy($id)
@@ -230,7 +278,9 @@ class UserController extends Controller
             ->findOrFail($id);
         $this->authorize("delete", $user);
         $user->delete();
-        return redirect()->back()->with(["info" => "User moved to trash"]);
+        return redirect()
+            ->back()
+            ->with(["info" => "User moved to trash"]);
     }
 
     public function restore($id)
@@ -240,6 +290,8 @@ class UserController extends Controller
             ->findOrFail($id);
         $this->authorize("restore", $user);
         $user->restore();
-        return redirect()->back()->with(["info" => "User restored"]);
+        return redirect()
+            ->back()
+            ->with(["info" => "User restored"]);
     }
 }

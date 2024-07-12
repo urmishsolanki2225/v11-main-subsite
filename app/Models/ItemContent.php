@@ -62,7 +62,7 @@ class ItemContent extends Model implements Auditable
     {
         return $this->videos()->first();
     }
-    
+
     //Added by Cyblance for Annual-Reports section start
     public function embeds()
     {
@@ -108,6 +108,12 @@ class ItemContent extends Model implements Auditable
     /*
      * Scout/Algolia indexing
      */
+    // Subsite section start
+    public function searchableAs()
+    {
+        return "item_contents_cybl"; // Use a unique identifier for the new index
+    }
+    // Subsite section end
     public function shouldBeSearchable()
     {
         return $this->item &&
@@ -184,6 +190,21 @@ class ItemContent extends Model implements Auditable
             )
             ->values()
             ->all();
+        // Subsite section start
+        $array["is_site"] = $this->item->is_site;
+        $array["regions"] = $collections
+            ->where("type", "region")
+            ->map(
+                fn($region) => [
+                    "id" => $region->id,
+                    "title" =>
+                        $region->content->title ??
+                        ($region->contents[0]->title ?? ""),
+                ]
+            )
+            ->values()
+            ->all();
+        // Subsite section end
         $array["categories"] = [];
         if ($this->item->type === "article") {
             $array["categories"][] = __("eiie.Articles");
