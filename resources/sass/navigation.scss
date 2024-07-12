@@ -1,0 +1,68 @@
+@media screen and (max-width: 747px){
+    #header_page{
+        nav#mainNav.show{
+            div#languageSelector-mobile{
+                padding-top:0px;
+                padding-bottom:0;
+                #languageSelection-mobile{
+                    
+                    box-sizing:border-box;
+                    ul#languageSelection_list-mobile{
+                        grid-template-columns:auto auto auto 1fr!important;
+                        grid-column-gap: 5px!important;
+                        justify-content:right;
+                        li{
+                            font-size:14px;
+                            a{
+                                padding-left:20px;
+                                padding-right:20px;
+                                background-color: rgba(59, 71, 85, 0.2);
+                                border-radius:3px;;
+                                padding-top:2px!important;
+                                padding-bottom:2px!important;
+                                .active &{
+                                    background-color:transparent;
+                                }
+                            }
+                            span{
+                                margin-right:20px;
+                                padding-top:2px;
+                                padding-bottom:2px;
+                                font-size:12px!important;
+                            }
+                            
+                        }
+                    } 
+                }
+                #searchBar-mobile{
+                    padding-bottom:10px;
+                    padding-top:0px;
+                    form#search_container-mobile{
+                        input#search_input-mobile{
+                            opacity:0.75!important;
+                            &:focus{
+                                opacity:1!important;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width:748px){
+    #header_page{
+        grid-template-columns: 10px 50px auto 120px!important;
+        nav#mainNav{
+            ul.nav_main > li{
+                &.active{
+                    .nav_main_title{
+                        background-color:aliceblue!important;
+                        color:#333;
+                    }
+                }
+            }
+        }
+    }
+}
