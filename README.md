@@ -38,3 +38,28 @@
 11. v11-main-subsite\routes\
     - breadcrumbs.php
     - web.php
+12 v11-main-subsite\resources\sass
+    - style-subsite.scss
+13. v11-main-subsite\resources\views\
+    - subsite-contactus.blade.php
+    - subsite-home.blade.php
+    - subsite-item.blade.php
+    - subsite-main.blade.php
+    - subsite-search-adv.blade.php
+    - subsite-search.blade.php
+14. v11-main-subsite\resources\views\collection
+    - subsite-affiliates.blade.php
+    - subsite-base_landing.blade.php
+    - subsite-base.blade.php
+    - subsite-cards_collections.blade.php
+    - subsite-collection.blade.php
+    - subsite-country_items.blade.php
+    - subsite-country_subnavigation.blade.php
+    - subsite-country.blade.php
+    - subsite-default.blade.php
+    - subsite-dossier_sub.blade.php
+    - subsite-dossier.blade.php
+    - subsite-items.blade.php
+    - subsite-region.blade.php
+    - subsite-subcoll_cards.blade.php
+    - subsite-worlds_of_education.blade.php
