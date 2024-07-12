@@ -88,4 +88,6 @@
     - subsite-dev_coop_project.blade.php
     - subsite-item.blade.php
     - subsite-library.blade.php
+21. D:\xampp\htdocs\v11-main-subsite
+    - vite.config.mjs
 
