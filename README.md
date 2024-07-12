@@ -91,3 +91,13 @@
 21. D:\xampp\htdocs\v11-main-subsite
     - vite.config.mjs
 
+#REACT JS
+1). v11-main-subsite\resources\
+- js\Models\Subsite.tsx
+- js\Models\User.ts
+- js\Models\Inertia.ts
+- js\Layout\PrimaryNavigation.tsx
+- js\Layout\AdminLayout.tsx
+- js\Components\Listing\Listing.tsx
+- js\Components\Listing\MultiSelectActionsFooter.tsx
+- js\Components\MetaInfoManager.tsx
