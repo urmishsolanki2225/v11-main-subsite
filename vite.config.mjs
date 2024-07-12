@@ -17,6 +17,10 @@ export default defineConfig(({ command, mode }) => {
                 "resources/sass/highlight.scss",
                 "resources/sass/aos.scss",
                 //Added by Cyblance for Annual-Reports section end
+                // Subsite section start
+                "resources/sass/style-subsite.scss",               
+                "resources/js/subsite-script.js",
+                // Subsite section end
                 "resources/js/script.js",
                 "resources/js/app.tsx",
                 "resources/js/front_app.tsx",
