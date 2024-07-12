@@ -1,1 +1,0 @@
-import{d as b,b as n,_}from"./_baseFlatten-DKoV2aKy.js";import{l as m,j as u}from"./useDataSource-CV-XnRBP.js";var y=b,f=m;function v(a,r){var e=-1,s=f(a)?Array(a.length):[];return y(a,function(t,p,i){s[++e]=r(t,p,i)}),s}var A=v,M=_,h=n,d=A,k=u;function o(a,r){var e=k(a)?M:d;return e(a,h(r))}var I=o;export{I as m};
