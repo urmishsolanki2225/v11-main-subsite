@@ -38,7 +38,7 @@
 11. v11-main-subsite\routes\
     - breadcrumbs.php
     - web.php
-12 v11-main-subsite\resources\sass
+12. v11-main-subsite\resources\sass
     - style-subsite.scss
 13. v11-main-subsite\resources\views\
     - subsite-contactus.blade.php
