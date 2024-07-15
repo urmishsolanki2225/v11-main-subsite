@@ -1,12 +1,12 @@
 Credential
 ------------------------------
 Email - 
-* africa@gmail.com	
-* accrs@gmail.com
-* asia-pacific@gmail.com
-* northamerica-caribbean@gmail.com
+    * africa@gmail.com	
+    * accrs@gmail.com
+    * asia-pacific@gmail.com
+    * northamerica-caribbean@gmail.com
 Password -
-123456789
+    * 123456789
 
 
 * app\Actions\
