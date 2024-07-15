@@ -27,7 +27,9 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return Inertia::render('Login/Login');
+        //Added by Cyblance for Subsite section start
+        return redirect()->route('login');
+        //Added by Cyblance for Subsite section end
     }
     
     public function authenticate(Request $request) {

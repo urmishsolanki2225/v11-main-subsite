@@ -8,12 +8,9 @@ use App\Actions\StoreResizedImages;
 use App\Filters\DevCoopPeriodFilter;
 use App\Filters\DevCoopRegionFilter;
 use App\Mail\CoopProjectReceived;
-use App\Models\Collection;
-use App\Models\CollectionContent;
-use App\Models\CoopProject;
-use App\Models\CoopProjectPartner;
-use App\Models\Item;
-use App\Models\ItemContent;
+//Added by Cyblance for Subsite section start
+use App\Models\{Collection, CollectionContent, CoopProject, CoopProjectPartner, Item, ItemContent, Subsite};
+//Added by Cyblance for Subsite section end
 use App\Sorts\DevCoopPeriodSort;
 use App\Sorts\DevCoopTitleSort;
 use App\Sorts\ItemContentTitleSort;
@@ -149,7 +146,19 @@ class CoopProjectController extends Controller
             ->paginate()
             ->appends(request()->query());
 
-        return view("coop_projects/listing", [
+        //Added by Cyblance for Subsite section starts    
+        $subdomain=getSubdomain();
+        if($subdomain){
+            $view="subsite-listing";
+
+        }else{
+            $view="listing";
+        }
+        $region_data = Subsite::where('aliase_name', $subdomain)->first();
+       
+        return view("coop_projects/".$view, [
+            'subsitedata' => $region_data,
+            //Added by Cyblance for Subsite section end
             "taxonomy" => $taxonomy,
             "projects" => $projects,
             "filters" => $filters,
@@ -268,8 +277,18 @@ class CoopProjectController extends Controller
         $introItem = Item::withoutGlobalScopes()->find(
             config("eiie.item.dev_coop_project_intro")
         );
+        //Added by Cyblance for Subsite section start
+        $subdomain=getSubdomain();
+        if($subdomain){
+            $view="subsite-overview";
+        }else{
+             $view="overview";
+        }
+        $region_data = Subsite::where('aliase_name', $subdomain)->first();
 
-        return view("coop_projects/overview", [
+        return view("coop_projects/".$view, [
+            'subsitedata' => $region_data,
+            //Added by Cyblance for Subsite section end
             "taxonomy" => $taxonomy,
             "projects" => $currentProjects,
             "filters" => $filters,

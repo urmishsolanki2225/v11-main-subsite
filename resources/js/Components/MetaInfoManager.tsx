@@ -25,6 +25,9 @@ import {
     isImageResource,
     isItem,
     ICollectionPageProps,
+    //Added by Cyblance for Subsite section start
+    GetSubsite,
+    //Added by Cyblance for Subsite section end
     Page,
     //Added by Cyblance for Annual-Reports section start
     Annualreport,
@@ -103,6 +106,15 @@ const MetaInfoManager = <T extends MetaType>({
         }
     }, [patch, publishAt]);
 
+    //Added by Cyblance for Subsite section start
+    const { subsite } = usePage<Page<GetSubsite>>().props;
+    let aliase_name = "";
+    if (subsite != null && subsite.aliase_name != null) {
+        aliase_name = subsite.aliase_name;
+
+    }
+    //Added by Cyblance for Subsite section start
+    
     return (
         <Section
             title="Publishing details"
@@ -543,9 +555,11 @@ const MetaInfoManager = <T extends MetaType>({
                             </Box>
                         </Box>
                         {item?.contents.map((content, idx) => {
-                            const url = `${window.origin}/${
-                                content.lang === "*" ? "en" : content.lang
-                            }/item/${item.id}:${content.slug || "_"}`;
+                            //Added by Cyblance for Subsite section start
+                            const url = aliase_name
+                                ? `${window.location.protocol}//${aliase_name}.${window.location.hostname}${window.location.port ? ":" + window.location.port : ""}/${content.lang === "*" ? "en" : content.lang}/item/${item.id}:${content.slug || "_"}`
+                                : `${window.location.protocol}//${window.location.hostname}${window.location.port ? ":" + window.location.port : ""}/${content.lang === "*" ? "en" : content.lang}/item/${item.id}:${content.slug || "_"}`
+                            //Added by Cyblance for Subsite section end
                             return (
                                 <Box
                                     key={idx}

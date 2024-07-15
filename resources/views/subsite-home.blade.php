@@ -12,11 +12,11 @@
 
 <article class="article_main collection_introduction home_introduction">
 	<header>
-            <h2>{{ $home_item->content->title ?? __('eiie.Education International') }}</h2>
+            <h2>{{ $home_item->content->title ?? __('eiie.Education International') . ' '. __("eiie.Region!") }}</h2>
 	</header>
         @isset ($home_item)
             <x-render-content :content="$home_item->content" blurbOnly />
-            <p><a href="{{ route('subsite.who-we-are') }}">{{ __('eiie.Read More') }}...</a></p>
+            <p><a href="{{ route('subsite.who-we-are') }}">{{ __('eiie.Read more') }}...</a></p>
         @else
             {!! __('eiie.home_intro') !!}
         @endisset

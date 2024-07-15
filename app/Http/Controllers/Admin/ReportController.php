@@ -122,15 +122,13 @@ class ReportController extends Controller
         // pdf jobs
         $pdfStatus = [];
         foreach (config("app.locales") as $lang => $label) {
-            // $busy = JobStatus::whereAlias("generate-annual-report-pdf")
-            //     ->whereTags(["year" => $year, "lang" => $lang])
-            //     ->whereNotFinished()
-            //     ->exists();
+            //Laravel Version 11 Update start
             $running = "0";
             $busy = Monitor::where("year", $year)
                 ->where("lang", $lang)
                 ->where("status", $running)
                 ->exists();
+            //Laravel Version 11 Update end
             $exists = Storage::disk("local")->exists(
                 "annual-reports-pdf/Annual-Report-$year-$lang.pdf"
             );

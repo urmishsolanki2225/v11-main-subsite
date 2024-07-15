@@ -360,13 +360,15 @@ export const PrimaryNavigation: React.FC = () => {
                     {/* Added by Cyblance for Subsite section end */}
                 </List>
             </Collapse>
-            <ListItemButton onClick={() => setExpandGeoData(!expandGeoData)}>
-                <ListItemIcon>
-                    <CountryIcon />
-                </ListItemIcon>
-                <ListItemText primary="Geo Data" />
-                {expandGeoData ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+            {can?.subsiteadmin?.canShareAccess && (
+                <ListItemButton onClick={() => setExpandGeoData(!expandGeoData)}>
+                    <ListItemIcon>
+                        <CountryIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Geo Data" />
+                    {expandGeoData ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+            )}
             <Collapse in={expandGeoData} timeout="auto">
                 <List sx={{ "& .MuiListItemButton-root": { pl: 4 } }}>
                     <ListItemButton
@@ -398,6 +400,7 @@ export const PrimaryNavigation: React.FC = () => {
                     </ListItemButton>
                 </List>
             </Collapse>
+           
             {/* Added by Cyblance for Annual-Reports section start */}
             {can?.annualreports?.view && (
                 <>
@@ -597,6 +600,7 @@ export const PrimaryNavigation: React.FC = () => {
                     )}
                 </List>
             </Collapse>
+            {can?.subsiteadmin?.canShareAccess && (
             <List>
                 <ListItem
                     button
@@ -608,6 +612,21 @@ export const PrimaryNavigation: React.FC = () => {
                     <ListItemText primary="Share settings" />
                 </ListItem>
             </List>
+            )}
+            {can?.items?.subsiteAdminAccess && (
+                <List>
+                    <ListItem
+                        button
+                        onClick={() => window.open(window.location.protocol + '//' + aliase_name + '.' + window.location.hostname)}
+                    >
+                        <ListItemIcon>
+                            <OpenInNewIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Go to Mysite" />
+                    </ListItem>
+                </List>
+            )}
+            {/* Added by Cyblance for Subsite section end */}
         </List>
     );
 };

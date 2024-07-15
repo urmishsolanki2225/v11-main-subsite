@@ -25,7 +25,10 @@ use Illuminate\Support\Str;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
-
+//Added by Cyblance for Subsite section start
+use App\Models\Subsite;
+use App\Filters\SubsiteCampaignFilter;
+//Added by Cyblance for Subsite section end
 class CollectionController extends Controller
 {
     public function index(Request $request)
@@ -99,6 +102,9 @@ class CollectionController extends Controller
                     "items_count",
                     fn($q, $val) => $q->having("items_count", $val)
                 ),
+                //Added by Cyblance for Subsite section start
+                AllowedFilter::custom('subsite.id', new SubsiteCampaignFilter),
+                //Added by Cyblance for Subsite section end
                 AllowedFilter::trashed()->default("no"),
             ])
             ->allowedSorts([
@@ -130,7 +136,48 @@ class CollectionController extends Controller
                 "parentCollections",
                 fn($q) => $q->where("status", "published")
             );
+        }   
+
+        //Added by Cyblance for Subsite section start
+        $regionId = Subsite::where('id', $request->user()->subsite_id)->pluck('region_id')->first();
+        if($request->input("filter.type")=="dossier,dossier_sub" ||
+            ($request->input("filter.type")=="listing,structure") ||
+            ($request->input("filter.type")=="structure,listing") ||
+            ($request->input("filter.type")=="dossier_sub") ||
+            (isset($request->input("filter")['subsite.id'])) ||
+            (isset($request->input("filter")['type']) && $request->input("filter")['type'] == "region") ||
+            (isset($request->input("filter")['type']) && $request->input("filter")['type'] == "country")
+        ){            
+            if($request->user()->can('subsiteAdminAccess', Collection::class)){
+                if(isset($request->input("filter")['type']) && $request->input("filter")['type'] == "region"){
+                    $is_site = ['1'];
+                    $collections = $collections->whereIn('is_site', $is_site);
+                    $collections = $collections->where('id', $regionId);
+                }elseif(isset($request->input("filter")['type']) && $request->input("filter")['type'] == "country"){
+                    $is_site = ['1'];
+                    $collections = $collections->whereIn('is_site', $is_site);
+                    $collections = $collections->whereHas(
+                        "parentCollections",
+                        fn($q) => $q->where("parent_id", $regionId)
+                    );
+                }else{
+                    $is_site = ['2'];
+                    $collections = $collections->whereIn('is_site', $is_site);
+                    $collections = $collections->whereHas(
+                        "parentCollections",
+                        fn($q) => $q->where("parent_id", $regionId)
+                    );
+                }
+            }else{                    
+                $is_site = ['1'];
+                
+                $collections = $collections->whereIn('is_site', $is_site);
+            }
+        }else{            
+            $is_site = ['1'];
+            $collections = $collections->whereIn('is_site', $is_site);
         }
+        //Added by Cyblance for Subsite section end
 
         if ($isInertia) {
             $collections = $collections
@@ -207,7 +254,9 @@ class CollectionController extends Controller
         $canCreateLimited = $request
             ->user()
             ->can("createLimited", Collection::class);
-        $allowed = $allowedAction->execute($canCreateLimited, $canCreate);
+        //Added by Cyblance for Subsite section start
+        $allowed = $allowedAction->execute($canCreateLimited, $canCreate ,'', $request->user()->role);
+        //Added by Cyblance for Subsite section end
         if (isset($allowed["layouts"][$collection->type])) {
             $data["layouts"] = $allowed["layouts"][$collection->type];
         }
@@ -237,6 +286,35 @@ class CollectionController extends Controller
         // https://github.com/benjamine/jsondiffpatch/blob/master/docs/deltas.md
         $patchAction->execute($collection, $request->all());
         $collection->refresh();
+
+        if ($collection->type === "dossier") {
+            $subsites = Subsite::all();
+            $campaignMapping = $subsites->pluck('aliase_name', 'region_id')
+            ->map(function ($item) {
+                return 'eiie.collection.campaign.' . $item;
+            })
+            ->toArray();
+
+            if (isset($request->parent_collections) && is_array($request->parent_collections)) {
+                $syncData = [];
+                foreach ($request->parent_collections as $parentCollection) {
+                    if (isset($parentCollection[0]['type']) && isset($parentCollection[0]['id']) &&
+                        isset($campaignMapping[$parentCollection[0]['id']])) {
+                        $campaignId = config($campaignMapping[$parentCollection[0]['id']]);
+
+                        // Use Eloquent model to check if campaignId exists
+                        if (\App\Models\Collection::where('id', $campaignId)->exists()) {
+                            $syncData[$campaignId] = ['parent_order' => 1];
+                        }
+                    }
+                }
+
+                if (!empty($syncData)) {
+                    $collection->parentCollections()->syncWithoutDetaching($syncData);
+                }
+            }
+        }
+
         foreach ($collection->contents as $content) {
             $content->slug = Str::slug($content->title ? $content->title : "-");
             $renderBlurb = new RenderContent(
@@ -270,7 +348,10 @@ class CollectionController extends Controller
         $data = $allowedAction->execute(
             $canCreateLimited,
             $canCreate,
-            $request->input("parent_collection_id")
+            $request->input("parent_collection_id"),
+            //Added by Cyblance for Subsite section start
+            $request->user()->role
+            //Added by Cyblance for Subsite section end
         );
 
         $collection = false;
@@ -302,6 +383,11 @@ class CollectionController extends Controller
 
         $create = $request->only(["type", "layout"]);
         $create["status"] = "draft";
+        //Added by Cyblance for Subsite section start
+        if ($request->user()->role == "subsiteadmin") {
+            $create['is_site'] = 2;
+        }
+        //Added by Cyblance for Subsite section end
         $collection = Collection::create($create);
         $createDefaultsAction->execute($collection);
 
@@ -311,6 +397,13 @@ class CollectionController extends Controller
                 "sub_order" => 9999,
             ]);
         }
+
+        //Added by Cyblance for Subsite section start
+        if ($request->user()->can('subsiteAdminAccess', Item::class)) {
+            $regionId = Subsite::where('id', $request->user()->subsite_id)->pluck('region_id')->first();
+            $collection->parentCollections()->attach($regionId);
+        }
+        //Added by Cyblance for Subsite section end
 
         return Redirect::route("admin.collections.edit", $collection)->with([
             "info" => "Collection created",
@@ -430,11 +523,22 @@ class CollectionController extends Controller
         $type = $collection->type;
         $succesMessage = item_success_message($type);
         $collection->forceDelete();
-        return redirect()
-            ->route("admin.collections.index", [
-                "filter" => ["type" => $type],
-            ])
-            ->with(["info" => $succesMessage . " permanently deleted"]);
+        //Added by Cyblance for Subsite section start
+        $role = auth()->user();
+        if ($role->role == "subsiteadmin") {
+            return redirect()
+                ->route("admin.collections.index", [
+                    "filter" => ["type" => $type, "subsite.id" => $role->subsite_id],
+                ])
+                ->with(["info" => $succesMessage . " permanently deleted"]);
+        } else {
+            return redirect()
+                ->route("admin.collections.index", [
+                    "filter" => ["type" => $type],
+                ])
+                ->with(["info" => $succesMessage . " permanently deleted"]);
+        }
+        //Added by Cyblance for Subsite section end
     }
 
     public function trash($id)

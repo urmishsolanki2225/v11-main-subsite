@@ -348,10 +348,14 @@ class RenderContent extends Component
                             break;
                         case "internal-item":
                             $linkClass = "link-internal";
-                            if ($item) {
+                            //Added by Cyblance for Subsite section start
+                            $subdomain = getSubdomain();
+                            if(isset($subdomain)){
+                                $link = new LinkSubsite($item);
+                            }else{
                                 $link = new Link($item);
-                                $url = $link->href;
                             }
+                            //Added by Cyblance for Subsite section end
                             break;
                         case "internal-collection":
                             break;

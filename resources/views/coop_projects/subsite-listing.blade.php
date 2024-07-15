@@ -31,7 +31,7 @@
 @section('content')
 <header>
     <h2>
-        <a href="{{ route('coop_projects.overview') }}">
+        <a href="{{ route('subsite.resources.coop_projects.overview') }}">
             {{__('eiie.Cooperation Projects') }}
         </a>
     </h2>

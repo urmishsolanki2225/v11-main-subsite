@@ -7,7 +7,10 @@ class AllowedCollectionsLayouts
     public function execute(
         $canCreateLimited,
         $canCreate,
-        $parentCollectionId = false
+        $parentCollectionId = false,
+        //Added by Cyblance for Subsite section start
+        $role
+        //Added by Cyblance for Subsite section end
     ) {
         $allowed;
         if (!$canCreate && $canCreateLimited) {
@@ -21,6 +24,26 @@ class AllowedCollectionsLayouts
                     "author" => ["author" => "Author"],
                 ],
             ];
+            //Added by Cyblance for Subsite section start
+        } elseif ($role=="subsiteadmin"){
+            $allowed = [
+                "types" => [
+                    "dossier" => "Dossier",
+                    "structure" => "Structure",
+                    "dossier_sub" => "Dossier subsection",
+                ],
+                "layouts" => [
+                    // Add layouts for "dossier" and "structure" if needed
+                    "structure" => [
+                        "subcoll_cards" => "Subcollections as cards",
+                    ],
+                    "dossier" => ["dossier" => "Dossier"],
+                    "dossier_sub" => [
+                        "dossier_sub" => "Normal subdossier",
+                    ],
+                ],
+            ];
+            //Added by Cyblance for Subsite section end
         } elseif ($canCreate) {
             $allowed = [
                 "types" => [

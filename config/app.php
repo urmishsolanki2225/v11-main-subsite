@@ -81,7 +81,9 @@ return [
 
     "locale" => "en",
     "locales" => ["en" => "English", "fr" => "Français", "es" => "Español "],
-
+    //Added by Cyblance for Subsite section start
+    "subsite-locales" => ["en" => "English", "fr" => "Français", "es" => "Español",  "pt" => "Português","ar" => "العربية"],
+    //Added by Cyblance for Subsite section end
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -177,7 +179,9 @@ return [
         /*
          * Provider for custom Purify setup
          */
+        //Laravel Version 11 Update start
         Stevebauman\Purify\PurifyServiceProvider::class,
+        //Laravel Version 11 Update end
 
         OwenIt\Auditing\AuditingServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,

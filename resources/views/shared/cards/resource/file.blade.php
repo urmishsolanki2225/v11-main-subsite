@@ -32,7 +32,13 @@
 	<div class="card-blurb">
         <x-render-content :content="$item->content" mode="text" textTag="p" blurbOnly wordLimit="{{ config('eiie.blurb-word-limit', 50) }}" />
 	</div>
-    <x-link :item="$item" class="resource-file-article-link"/>
+    <!-- Added by Cyblance for Subsite section start -->
+    @if(isset($subsitedata))
+        <x-link-subsite :item="$item" class="ressource-file-article-link"/>
+    @else
+        <x-link :item="$item" class="ressource-file-article-link"/>
+    @endif
+     <!-- Added by Cyblance for Subsite section end -->
 	@endif
 
     @if(!empty($item->content->files))

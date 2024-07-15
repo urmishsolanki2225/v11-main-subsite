@@ -51,9 +51,36 @@ return [
         "team" => env("EIIE_COLLECTION_TEAM", 1247),
         "spotlight" => env("EIIE_COLLECTION_SPOTLIGHT", 1251),
         "campaigns" => env("EIIE_COLLECTION_CAMPAIGNS", 1252),
+        //Added by Cyblance for Subsite section start        
+        "campaign" => [
+            "africa" => env("EIIE_COLLECTION_CAMPAIGNS_AFRICA", ),
+            "accrs" => env("EIIE_COLLECTION_CAMPAIGNS_ACCRS", ),
+            "northamerica" => env("EIIE_COLLECTION_CAMPAIGNS_NORTHAMERICA", ),
+            "latin-america" => env("EIIE_COLLECTION_CAMPAIGNS_LATINAMERICA", ),
+            "asia-pacific" => env("EIIE_COLLECTION_CAMPAIGNS_ASIAPACIFIC", ),
+        ],
+        //Added by Cyblance for Subsite section end
         "priorities" => env("EIIE_COLLECTION_PRIORITIES", 1322),
         "featured" => env("EIIE_COLLECTION_FEATURED", 1344),
+        //Added by Cyblance for Subsite section start
+        "featured-subsite" => [
+            "africa" => env("EIIE_COLLECTION_FEATURED_AFRICA", ),
+            "accrs" => env("EIIE_COLLECTION_FEATURED_ACCRS", ),
+            "northamerica" => env("EIIE_COLLECTION_FEATURED_NORTHAMERICA", ),
+            "latin-america" => env("EIIE_COLLECTION_FEATURED_LATINAMERICA", ),
+            "asia-pacific" => env("EIIE_COLLECTION_FEATURED_ASIAPACIFIC", ),
+        ],
+        //Added by Cyblance for Subsite section end
         "contact-offices" => env("EIIE_COLLECTION_CONTACT_OFFICES", 1358),
+        //Added by Cyblance for Subsite section start
+        "contact-offices-subsite" => [
+            "africa" => env("EIIE_COLLECTION_CONTACT_OFFICES_AFRICA", ),
+            "accrs" => env("EIIE_COLLECTION_CONTACT_OFFICES_ACCRS", ),
+            "northamerica" => env("EIIE_COLLECTION_CONTACT_OFFICES_NORTHAMERICA", ),
+            "latin-america" => env("EIIE_COLLECTION_CONTACT_OFFICES_LATINAMERICA", ),
+            "asia-pacific" => env("EIIE_COLLECTION_CONTACT_OFFICES_ASIAPACIFIC", ),
+        ],
+        //Added by Cyblance for Subsite section end
         "publications-and-research" => env(
             "EIIE_COLLECTION_PUBLICATIONS_AND_RESEARCH",
             1359
@@ -79,6 +106,22 @@ return [
         "home" => env("EIIE_HOME_ITEM", 25175),
         "dev_coop_project_intro" => ENV("EIIE_DEV_COOP_PROJECT_INTRO", 26527),
         "newsletters" => ENV("EIIE_NEWSLETTERS_ITEM", 27264),
+        //Added by Cyblance for Subsite section start
+        "who-we-are-subsite" => [
+            "africa" => 28774,
+            "accrs" => '',
+            "northamerica" => '',
+            "latin-america" => '',
+            "asia-pacific" => '',
+        ],
+        "home-subsite" => [
+            "africa" => env("EIIE_HOME_ITEM_AFRICA", 28775),
+            "accrs" => env("EIIE_HOME_ITEM_ACCRS", ),
+            "northamerica" => env("EIIE_HOME_ITEM_NORTHAMERICA", ),
+            "latin-america" => env("EIIE_HOME_ITEM_LATINAMERICA", ),
+            "asia-pacific" => env("EIIE_HOME_ITEM_ASIAPACIFIC", ),
+        ],
+        //Added by Cyblance for Subsite section end
     ],
     "google-analytics-tracking-id" => env(
         "GOOGLE_ANALYTICS_TRACKING_ID",

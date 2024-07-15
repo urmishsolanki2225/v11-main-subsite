@@ -7,12 +7,16 @@ import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 
 import { AvailableLanguages } from "../../Config";
-
+//Added by Cyblance for Subsite section start
+import { GetSubsite, Page } from "@/Models";
+import { usePage } from "@inertiajs/inertia-react";
 interface IProps {
     onChange: (languages: string[]) => void;
+    initialLanguages?: any;
 }
-const LanguagePicker: React.FC<IProps> = ({ onChange }) => {
-    const [langs, setLangs] = useState<string[]>([]);
+const LanguagePicker: React.FC<IProps> = ({ onChange, initialLanguages }) => {     
+    const [langs, setLangs] = useState<string[]>(initialLanguages || []);
+    //Added by Cyblance for Subsite section end
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLangs((langs) => {
@@ -28,11 +32,29 @@ const LanguagePicker: React.FC<IProps> = ({ onChange }) => {
         onChange(langs);
     }, [langs, onChange]);
 
+    //Added by Cyblance for Subsite section start
+    useEffect(() => {
+        setLangs(initialLanguages || []);
+    }, [initialLanguages]);
+    
+    const { subsite } = usePage<Page<GetSubsite>>().props;
+    let filteredAvailableLanguages: [string, string][] = [];
+    if (subsite && subsite.languages && subsite.languages !== "" && subsite.languages != "*") {
+        filteredAvailableLanguages = AvailableLanguages.filter(([code, name]) => {
+            return subsite.languages.includes(code) || code === "*";
+        });
+    } else {
+        filteredAvailableLanguages = AvailableLanguages;
+    }
+    //Added by Cyblance for Subsite section end
+
     return (
         <FormControl>
-            <FormLabel>Languages</FormLabel>
+            {/* Added by Cyblance for Subsite section start */}
+            <FormLabel>Languages *</FormLabel>
             <FormGroup row>
-                {AvailableLanguages.map(([code, name]) => (
+                {filteredAvailableLanguages.map(([code, name]) => (
+                    //Added by Cyblance for Subsite section end
                     <FormControlLabel
                         key={code}
                         value={code}

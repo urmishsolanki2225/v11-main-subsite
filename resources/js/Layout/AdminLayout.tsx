@@ -20,6 +20,11 @@ import FlashMessages from "./FlashMessages";
 import PrimaryNavigation from "./PrimaryNavigation";
 import SessionLifetime from "./SessionLifetimeAlert";
 
+//Added by Cyblance for Subsite section start
+import { Page, GetSubsite } from "../Models";
+import { usePage } from "@inertiajs/inertia-react";
+//Added by Cyblance for Subsite section end
+
 const drawerWidth = 240;
 
 interface IProps {
@@ -30,6 +35,18 @@ interface IProps {
 export const AdminLayout: React.FC<IProps> = ({ children }) => {
     const [drawerOpen, setDrawerOpen] = useLocalStorage("drawerOpen", true);
     const theme = useTheme();
+
+    //Added by Cyblance for Subsite section start
+    const { subsite } = usePage<Page<GetSubsite>>().props;
+    let name = "";
+    if (subsite != null && subsite.aliase_name != null) {
+        name = subsite.aliase_name;
+    }
+    let string_add = '';
+    if (name.length > 9) {
+        string_add = '...';
+    }
+    //Added by Cyblance for Subsite section end
 
     return (
         <AppProvider>
@@ -74,7 +91,9 @@ export const AdminLayout: React.FC<IProps> = ({ children }) => {
                                         variant="h6"
                                         sx={{ flexGrow: 1 }}
                                     >
-                                        Ei-iE
+                                        {/* Added by Cyblance for Subsite section start */}
+                                        {name == ''  ? `Ei-iE` : `${name.charAt(0).toUpperCase() + name.slice(1).substring(0, 9) + string_add}`}
+                                        {/* Added by Cyblance for Subsite section end */}
                                     </Typography>
                                 </>
                             ) : (

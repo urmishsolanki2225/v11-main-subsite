@@ -27,10 +27,13 @@ interface IProps {
     algolia: {
         appId: string;
         apiKey: string;
-        indexName: string;
+        indexName: string;         
     };
+    //Added by Cyblance for Subsite section start
+    regions?: string;
 }
-const SearchPage: React.FC<IProps> = ({ translations, algolia, language }) => {
+const SearchPage: React.FC<IProps> = ({ translations, algolia, language, regions }) => {
+    //Added by Cyblance for Subsite section end
     const [searchClient] = useState(() =>
         algoliasearch(algolia.appId, algolia.apiKey)
     );
@@ -49,7 +52,9 @@ const SearchPage: React.FC<IProps> = ({ translations, algolia, language }) => {
                 <Configure
                     hitsPerPage={16}
                     attributesToSnippet={["content:50"]}
-                    filters={`(lang:"${language}" OR lang:"*")`}
+                    //Added by Cyblance for Subsite section strat
+                    filters={regions != undefined ? `(lang:"${language}" OR lang:"*") AND (is_site:2 OR is_site:3) AND (regions.title: "${regions}")` : `(lang:"${language}" OR lang:"*") AND (is_site:1 OR is_site:3)`}
+                    //Added by Cyblance for Subsite section end
                     clickAnalytics
                 />
                 <InsightsMiddleware />

@@ -29,20 +29,19 @@ class SubsiteUserController extends Controller
     }
     public function index()
     {
-        $slider = config('eiie.item.home-subsite');
-      
-        $sliderValue = isset($slider[$this->subsites['subsites']->aliase_name]);
-        $homeItem = Item::withoutGlobalScopes()->find($sliderValue);
-
-        $news_id = config("eiie.collection.news");
-
-        $featsubsitearray = config('eiie.collection.featured-subsite');
-        $featsubsiteid = isset($featsubsitearray[$this->subsites['subsites']->aliase_name]);
+        //Home Page Intro
+        $homeIntro = config('eiie.item.home-subsite');   
+        $homeIntoID = $homeIntro[$this->subsites['subsites']->aliase_name] ?? '';            
+        $homeItem = Item::withoutGlobalScopes()->find($homeIntoID);        
+        
+        $featuredItems = config('eiie.collection.featured-subsite');
+        $featuredItemID = $featuredItems[$this->subsites['subsites']->aliase_name] ?? '';
         $featured = Collection::with([
             'items',
             'items.collections.content:id,title,slug,collection_id,lang',
-        ])->find($featsubsiteid);
+        ])->find($featuredItemID);
 
+        $news_id = config("eiie.collection.news");
         $collection = Collection::with([
             'images.content.images',
         ])
@@ -335,7 +334,7 @@ class SubsiteUserController extends Controller
         );
     }
 
-    public function contactus($locale, $addressId)
+    public function contactus($addressId)
     {
         return view()->first([
             'subsite-contactus'
@@ -358,7 +357,6 @@ class SubsiteUserController extends Controller
 
         return view()->first(
             ["subsite-item." . $item->type, "subsite-item"],
-            // ['subsite-item'],
             [
                 'item' => $item,
                 'relatedItems' => $item->relatedItemsSubsite(),

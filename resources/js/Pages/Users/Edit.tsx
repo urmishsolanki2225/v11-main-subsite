@@ -190,38 +190,38 @@ const Edit: React.FC<IProps & ErrorPageProps> = ({
                                 </FormControl>
                             </Grid>
                         )}
-                    </Grid>
-                    {/*Added by Cyblance for Subsite section start*/}
-                    {can?.subsite?.updateSubsite && role == "subsiteadmin" &&(
-                        <Grid item xs={6}>
-                            <Box ml={2}>
-                            <FormControl variant="outlined" fullWidth>
-                                <InputLabel>Subsite name</InputLabel>
-                                <Select
-                                    open={subOpen}
-                                    disabled={role != "subsiteadmin"}
-                                    onOpen={() => setSubOpen(true)}
-                                    onClose={() => setSubOpen(false)}
-                                    label="Subsite Name"
-                                    onChange={(e) =>
-                                        setSubsiteId(e.target.value as any)
-                                    }
-                                    value={subsite_id || ''}
-                                    fullWidth
-                                >
-                                    {Object.entries(subsite_edit[0]).map(
-                                        ([subsite_id, label], i) => (
-                                            <MenuItem value={subsite_id} key={i}>
-                                                {label}
-                                            </MenuItem>
-                                        )
-                                    )}
-                                </Select>
-                            </FormControl>
-                            </Box>
-                        </Grid>
-                    )}
-                    {/*Added by Cyblance for Subsite section end*/}
+                        {/*Added by Cyblance for Subsite section start*/}
+                        {can?.subsite?.updateSubsite && role == "subsiteadmin" &&(
+                            <Grid item xs={6}>
+                                <Box ml={2}>
+                                <FormControl variant="outlined" fullWidth>
+                                    <InputLabel>Subsite name</InputLabel>
+                                    <Select
+                                        open={subOpen}
+                                        disabled={role != "subsiteadmin"}
+                                        onOpen={() => setSubOpen(true)}
+                                        onClose={() => setSubOpen(false)}
+                                        label="Subsite Name"
+                                        onChange={(e) =>
+                                            setSubsiteId(e.target.value as any)
+                                        }
+                                        value={subsite_id || ''}
+                                        fullWidth
+                                    >
+                                        {Object.entries(subsite_edit[0]).map(
+                                            ([subsite_id, label], i) => (
+                                                <MenuItem value={subsite_id} key={i}>
+                                                    {label}
+                                                </MenuItem>
+                                            )
+                                        )}
+                                    </Select>
+                                </FormControl>
+                                </Box>
+                            </Grid>
+                        )}
+                        {/*Added by Cyblance for Subsite section end*/}
+                    </Grid>                    
                 </Section>
                 <Section title="Actions">
                     <Grid container spacing={4} alignItems="baseline">

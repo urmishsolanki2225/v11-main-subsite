@@ -44,7 +44,9 @@ class CollectionPolicy
     public function create(User $user, $type = "")
     {
         // only authors are allowed to be created by non-admin
-        return $user->role == "admin" || $type == "author";
+        //Added by Cyblance for Subsite section start
+        return $user->role == "admin" || $type == "author" || $user->role == 'subsiteadmin';
+        //Added by Cyblance for Subsite section end
     }
 
     public function createLimited(User $user)
@@ -59,10 +61,11 @@ class CollectionPolicy
      * @param  \App\Models\Collection  $collection
      * @return mixed
      */
+    //Added by Cyblance for Subsite section start
     public function update(User $user, Collection $collection)
     {
         //
-        return true;
+        return $user->role == "admin" || $user->role == "editor" || ($user->role == 'subsiteadmin' && in_array($collection->is_site, [2, 3]));
     }
 
     /**
@@ -74,7 +77,7 @@ class CollectionPolicy
      */
     public function delete(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || ($user->role == 'subsiteadmin' && in_array($collection->is_site, [2, 3]));
     }
 
     /**
@@ -86,7 +89,7 @@ class CollectionPolicy
      */
     public function restore(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || ($user->role == 'subsiteadmin' && in_array($collection->is_site, [2, 3]));
     }
 
     /**
@@ -98,21 +101,26 @@ class CollectionPolicy
      */
     public function forceDelete(User $user, Collection $collection)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || ($user->role == 'subsiteadmin' && in_array($collection->is_site, [2, 3]));
     }
 
     public function deleteMany(User $user)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || $user->role == 'subsiteadmin';;
     }
 
     public function restoreMany(User $user)
     {
-        return $user->role == "admin";
+        return $user->role == "admin" || $user->role == 'subsiteadmin';;
     }
 
     public function forceDeleteMany(User $user)
     {
         return $user->role == "admin";
     }
+    public function subsiteAdminAccess(User $user)
+    {
+        return $user->role == 'subsiteadmin';
+    }
+    //Added by Cyblance for Subsite section end
 }

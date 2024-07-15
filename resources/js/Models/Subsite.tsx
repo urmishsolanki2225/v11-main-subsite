@@ -1,4 +1,4 @@
-export interface Subsite {
+export interface Subsite {    
     id: number;
     region_id: number;
     name: string;
@@ -14,6 +14,10 @@ export interface Subsite {
     tracking_code: string;
     view_id: string;
     languages:any;
+    soundcloudURL: any;
+    twitterURL: any;
+    youtubeURL: any;
+    facebookURL: any;
     created_at: string;
     updated_at: string;
 }

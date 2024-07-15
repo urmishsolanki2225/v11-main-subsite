@@ -4,6 +4,10 @@ export const AvailableLanguages: [string, string][] = [
     ["en", "English"],
     ["fr", "French"],
     ["es", "Spanish"],
+    //Added by Cyblance for Subsite section start
+    ["ar", "Arabic"], // Add Arabic
+    ["pt", "Portuguese"], // Add Portuguese
+    //Added by Cyblance for Subsite section end
     ["*", "-all-"],
 ];
 

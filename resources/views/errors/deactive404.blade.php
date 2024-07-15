@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>403 - Forbidden</title>
+        <title>{{ __('Unauthorized') }}</title>
         @vite('resources/sass/style-subsite.scss')
 
     </head>

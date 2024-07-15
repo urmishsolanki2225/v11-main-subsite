@@ -33,6 +33,9 @@ class User extends Authenticatable
         //Added by Cyblance to add role in database start
         'role',
         //Added by Cyblance to add role in database end
+        //Added by Cyblance for Subsite section start
+        'subsite_id'
+        //Added by Cyblance for Subsite section end
     ];
 
     /**

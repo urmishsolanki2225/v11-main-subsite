@@ -13,9 +13,8 @@ use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
-// use JobStatus\Concerns\Trackable;
-use romanzipp\QueueMonitor\Models\Monitor;
-use romanzipp\QueueMonitor\Traits\IsMonitored; // <---
+use romanzipp\QueueMonitor\Models\Monitor; //Laravel Version 11 Update
+use romanzipp\QueueMonitor\Traits\IsMonitored; //Laravel Version 11 Update
 
 class GenerateAnnualReportPDF implements ShouldQueue, ShouldBeUnique
 {
@@ -23,8 +22,7 @@ class GenerateAnnualReportPDF implements ShouldQueue, ShouldBeUnique
         InteractsWithQueue,
         Queueable,
         SerializesModels,
-        IsMonitored; // <---
-    // Trackable;
+        IsMonitored; //Laravel Version 11 Update
 
     public $timeout = 600;
 
