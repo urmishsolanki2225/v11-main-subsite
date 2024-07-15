@@ -53,32 +53,29 @@ return [
         "campaigns" => env("EIIE_COLLECTION_CAMPAIGNS", 1252),
         //Added by Cyblance for Subsite section start        
         "campaign" => [
-            "africa" => env("EIIE_COLLECTION_CAMPAIGNS_AFRICA", ),
-            "accrs" => env("EIIE_COLLECTION_CAMPAIGNS_ACCRS", ),
-            "northamerica" => env("EIIE_COLLECTION_CAMPAIGNS_NORTHAMERICA", ),
-            "latin-america" => env("EIIE_COLLECTION_CAMPAIGNS_LATINAMERICA", ),
-            "asia-pacific" => env("EIIE_COLLECTION_CAMPAIGNS_ASIAPACIFIC", ),
+            "africa" => env("EIIE_COLLECTION_CAMPAIGNS_AFRICA", 1653),
+            "accrs" => env("EIIE_COLLECTION_CAMPAIGNS_ACCRS", 1654),
+            "northamerica-caribbean" => env("EIIE_COLLECTION_CAMPAIGNS_NORTHAMERICA", 1655),          
+            "asia-pacific" => env("EIIE_COLLECTION_CAMPAIGNS_ASIAPACIFIC", 1656),
         ],
         //Added by Cyblance for Subsite section end
         "priorities" => env("EIIE_COLLECTION_PRIORITIES", 1322),
         "featured" => env("EIIE_COLLECTION_FEATURED", 1344),
         //Added by Cyblance for Subsite section start
         "featured-subsite" => [
-            "africa" => env("EIIE_COLLECTION_FEATURED_AFRICA", ),
-            "accrs" => env("EIIE_COLLECTION_FEATURED_ACCRS", ),
-            "northamerica" => env("EIIE_COLLECTION_FEATURED_NORTHAMERICA", ),
-            "latin-america" => env("EIIE_COLLECTION_FEATURED_LATINAMERICA", ),
-            "asia-pacific" => env("EIIE_COLLECTION_FEATURED_ASIAPACIFIC", ),
+            "africa" => env("EIIE_COLLECTION_FEATURED_AFRICA", 1645),
+            "accrs" => env("EIIE_COLLECTION_FEATURED_ACCRS", 1646),
+            "northamerica-caribbean" => env("EIIE_COLLECTION_FEATURED_NORTHAMERICA", 1647),           
+            "asia-pacific" => env("EIIE_COLLECTION_FEATURED_ASIAPACIFIC", 1648),
         ],
         //Added by Cyblance for Subsite section end
         "contact-offices" => env("EIIE_COLLECTION_CONTACT_OFFICES", 1358),
         //Added by Cyblance for Subsite section start
         "contact-offices-subsite" => [
-            "africa" => env("EIIE_COLLECTION_CONTACT_OFFICES_AFRICA", ),
-            "accrs" => env("EIIE_COLLECTION_CONTACT_OFFICES_ACCRS", ),
-            "northamerica" => env("EIIE_COLLECTION_CONTACT_OFFICES_NORTHAMERICA", ),
-            "latin-america" => env("EIIE_COLLECTION_CONTACT_OFFICES_LATINAMERICA", ),
-            "asia-pacific" => env("EIIE_COLLECTION_CONTACT_OFFICES_ASIAPACIFIC", ),
+            "africa" => env("EIIE_COLLECTION_CONTACT_OFFICES_AFRICA", 1649),
+            "accrs" => env("EIIE_COLLECTION_CONTACT_OFFICES_ACCRS", 1650),
+            "northamerica-caribbean" => env("EIIE_COLLECTION_CONTACT_OFFICES_NORTHAMERICA", 1651),          
+            "asia-pacific" => env("EIIE_COLLECTION_CONTACT_OFFICES_ASIAPACIFIC", 1652),
         ],
         //Added by Cyblance for Subsite section end
         "publications-and-research" => env(
@@ -107,20 +104,18 @@ return [
         "dev_coop_project_intro" => ENV("EIIE_DEV_COOP_PROJECT_INTRO", 26527),
         "newsletters" => ENV("EIIE_NEWSLETTERS_ITEM", 27264),
         //Added by Cyblance for Subsite section start
+        "home-intro-subsite" => [
+            "africa" => env("EIIE_HOME_ITEM_AFRICA", 28774),
+            "accrs" => env("EIIE_HOME_ITEM_ACCRS", 28775),
+            "northamerica-caribbean" => env("EIIE_HOME_ITEM_NORTHAMERICA", 28776),           
+            "asia-pacific" => env("EIIE_HOME_ITEM_ASIAPACIFIC", 287747),
+        ],
         "who-we-are-subsite" => [
-            "africa" => 28774,
-            "accrs" => '',
-            "northamerica" => '',
-            "latin-america" => '',
-            "asia-pacific" => '',
-        ],
-        "home-subsite" => [
-            "africa" => env("EIIE_HOME_ITEM_AFRICA", 28775),
-            "accrs" => env("EIIE_HOME_ITEM_ACCRS", ),
-            "northamerica" => env("EIIE_HOME_ITEM_NORTHAMERICA", ),
-            "latin-america" => env("EIIE_HOME_ITEM_LATINAMERICA", ),
-            "asia-pacific" => env("EIIE_HOME_ITEM_ASIAPACIFIC", ),
-        ],
+            "africa" => 28778,
+            "accrs" => 28779,
+            "northamerica-caribbean" => 28780,            
+            "asia-pacific" => 28781,
+        ],       
         //Added by Cyblance for Subsite section end
     ],
     "google-analytics-tracking-id" => env(

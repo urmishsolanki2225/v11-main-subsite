@@ -30,8 +30,8 @@ class SubsiteUserController extends Controller
     public function index()
     {
         //Home Page Intro
-        $homeIntro = config('eiie.item.home-subsite');   
-        $homeIntoID = $homeIntro[$this->subsites['subsites']->aliase_name] ?? '';            
+        $homeIntro = config('eiie.item.home-intro-subsite');          
+        $homeIntoID = $homeIntro[$this->subsites['subsites']->aliase_name] ?? '';          
         $homeItem = Item::withoutGlobalScopes()->find($homeIntoID);        
         
         $featuredItems = config('eiie.collection.featured-subsite');

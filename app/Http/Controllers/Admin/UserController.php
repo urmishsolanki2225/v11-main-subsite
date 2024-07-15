@@ -71,9 +71,16 @@ class UserController extends Controller
 
         //Added by Cyblance for Subsite section start
         $subsites = Subsite::where('is_active', 'active')->get();
-        $get_subsite = $subsites->pluck('name', 'id')->toArray();
+        $get_subsite = $subsites->pluck('name', 'id')->toArray();       
+        // Add 'subsiteadmin' role if there are active subsites
+        $roles = [
+            "editor" => "Editor",
+            "admin" => "Admin",
+        ];
+        if ($subsites && $subsites->isNotEmpty()) {
+            $roles['subsiteadmin'] = 'Subsite Admin';
+        }
         //Added by Cyblance for Subsite section end
-
         $data = [
             "userModel" => $user,
             "can" => [
@@ -88,7 +95,7 @@ class UserController extends Controller
                 //Added by Cyblance for Subsite section end
             ],
             //Added by Cyblance for Subsite section start
-            "roles" => ["editor" => "Editor", "admin" => "Admin", "subsiteadmin" => "Subsite Admin"],
+            "roles" => $roles,
             "subsite_edit" => [$get_subsite],
             //Added by Cyblance for Subsite section end
         ];

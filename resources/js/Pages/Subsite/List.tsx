@@ -16,6 +16,7 @@ import Paginated from "../../Models/Paginated";
 import { Button } from "@mui/material";
 import Switch from '@mui/material/Switch';
 import SubsiteItemList from "../../Components/SubsiteItemList";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface IProps extends IListingPageProps, AuthPageProps {
     subsites: Paginated<Subsite>;
@@ -70,12 +71,27 @@ const List: React.FC<IProps> = ({ subsites, filter: _filter, sort,can }) => {
         {
             headerName: 'Status',
             field: "is_active",
-            flex: 1,
+            flex: 0.5,
         },
         {
             headerName: 'Aliase Name',
             field: "aliase_name",
-            flex: 1,
+            flex: 1.5,
+        },
+        {
+            field: "Preview",
+            headerName: 'Preview',
+            sortable: false,
+            renderCell: (cell) => (
+                <IconButton
+                    onClick={() => window.open(`${window.location.protocol}//${cell.row.aliase_name}.${window.location.hostname}`)}
+                >
+                    <VisibilityIcon />
+                </IconButton>
+            ),
+            flex: 0.5,
+            align: "center",
+           
         },
         {
             field: "Subsite Items",
@@ -91,6 +107,7 @@ const List: React.FC<IProps> = ({ subsites, filter: _filter, sort,can }) => {
                     </Button>
             ),
             flex: 1,
+            align: "center",
         },
         {
             field: "Change Status",
@@ -109,7 +126,8 @@ const List: React.FC<IProps> = ({ subsites, filter: _filter, sort,can }) => {
                     />
                 </div>
             ),
-            flex: 1,
+            flex: 0.5,
+            align: "center",
         },
     ];
     const onCreate = () => {
