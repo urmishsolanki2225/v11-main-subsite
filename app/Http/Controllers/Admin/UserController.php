@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Password;
-
-use App\Models\User;
-
+//Added by Cyblance for Subsite section start
+use App\Models\{User, Subsite};
+//Added by Cyblance for Subsite section end
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -69,6 +69,11 @@ class UserController extends Controller
             return Redirect::back()->withErrors(["error" => "Not authorized"]);
         }
 
+        //Added by Cyblance for Subsite section start
+        $subsites = Subsite::where('is_active', 'active')->get();
+        $get_subsite = $subsites->pluck('name', 'id')->toArray();
+        //Added by Cyblance for Subsite section end
+
         $data = [
             "userModel" => $user,
             "can" => [
@@ -76,8 +81,16 @@ class UserController extends Controller
                     "update" => $request->user()->can("updateRole", $user),
                 ],
                 "user" => ["delete" => $request->user()->can("delete", $user)],
+                //Added by Cyblance for Subsite section start
+                "subsite" => [
+                    "updateSubsite" => $request->user()->can("updateSubsite", $user)
+                ],
+                //Added by Cyblance for Subsite section end
             ],
-            "roles" => ["editor" => "Editor", "admin" => "Admin"],
+            //Added by Cyblance for Subsite section start
+            "roles" => ["editor" => "Editor", "admin" => "Admin", "subsiteadmin" => "Subsite Admin"],
+            "subsite_edit" => [$get_subsite],
+            //Added by Cyblance for Subsite section end
         ];
         $sharedCan = Inertia::getShared("can");
         if ($sharedCan) {
@@ -93,9 +106,20 @@ class UserController extends Controller
             return Redirect::back()->withErrors(["error" => "Not authorized"]);
         }
 
+        //Added by Cyblance for Subsite section start
+        $subsites = Subsite::where('is_active', 'active')->get();
+        $roles = [
+            "editor" => "Editor",
+            "admin" => "Admin",
+        ];        
+        if ($subsites && $subsites->isNotEmpty()) {
+            $roles['subsiteadmin'] = 'Subsite Admin';
+        }        
         return Inertia::render("Users/Create", [
-            "roles" => ["editor" => "Editor", "admin" => "Admin"],
+            "roles" => $roles,
+            'get_subsite' => $subsites ? $subsites->pluck('name', 'id')->toArray() : [],
         ]);
+        //Added by Cyblance for Subsite section end
     }
 
     public function store(Request $request)
@@ -110,7 +134,11 @@ class UserController extends Controller
             "email" => ["required", "email", Rule::unique("users")],
         ]);
 
-        $create = $request->only(["name", "email", "role"]);
+        //Added by Cyblance for Subsite section start
+        $subsite_id = (string) $request->subsite_id;
+        $request->subsite_id = $subsite_id;
+        $create = $request->only(["name", "email", "role", "subsite_id"]);
+        //Added by Cyblance for Subsite section end
         $create["password"] = Str::random(12);
         $user = User::create($create);
 
@@ -149,6 +177,13 @@ class UserController extends Controller
             }
             $user->role = $request->input("role");
         }
+        //Added by Cyblance for Subsite section start
+        if ($request->has('subsite_id') && $request->input("subsite_id") != null) {
+            $user->subsite_id = $request->input('subsite_id');
+        }else{
+            $user->subsite_id = null;
+        }
+        //Added by Cyblance for Subsite section end
         $user->save();
 
         return Redirect::route("admin.users.edit", $user)->with([

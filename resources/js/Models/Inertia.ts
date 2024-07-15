@@ -29,6 +29,9 @@ export interface IFilterProps extends QueryParams {
         trashed?: "only";
         published_before?: string;
         published_after?: string;
+        //Added by Cyblance for Subsite section start
+        "subsite.id"?: number;
+        //Added by Cyblance for Subsite section end
     };
 }
 export interface IListingPageProps {
@@ -72,3 +75,11 @@ export interface SessionPageProps extends PageProps {
 export type Page<T> = InertiaPage & {
     props: T;
 };
+//Added by Cyblance for Subsite section start
+export interface GetSubsite {
+    subsite?: {
+        aliase_name: string;
+        languages: string;
+    };
+}
+//Added by Cyblance for Subsite section end

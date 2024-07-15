@@ -46,7 +46,13 @@ import Tooltip from "@mui/material/Tooltip";
 import { useLocalStorage } from "react-use";
 import route from "ziggy-js";
 
-import { AuthPageProps, UserPageProps, Page } from "../Models";
+//Added by Cyblance for Subsite section start
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import UpdateIcon from '@mui/icons-material/Update';
+import WebIcon from '@mui/icons-material/Web';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { AuthPageProps, UserPageProps, Page, GetSubsite } from "../Models";
+//Added by Cyblance for Subsite section end
 
 import { LOCALSTORAGE_KEYS } from "@/Config";
 
@@ -192,6 +198,17 @@ export const PrimaryNavigation: React.FC = () => {
         "ei_expand_annualreport",
         false
     );
+    //Added by Cyblance for Subsite section start
+    const [expandSubsites, setExpandSubsites] = useLocalStorage(
+        "ei_expand_subsites",
+        false
+    );
+    const { subsite } = usePage<Page<GetSubsite>>().props;
+    let aliase_name = "";
+    if (subsite != null && subsite.aliase_name != null) {
+        aliase_name = subsite.aliase_name;
+    }
+    //Added by Cyblance for Subsite section end
     const needSave = false;
 
     const [previousAnnualReportYear] = useLocalStorage<number>(
@@ -241,12 +258,24 @@ export const PrimaryNavigation: React.FC = () => {
                                 button
                                 disabled={needSave}
                                 onClick={() =>
-                                    Inertia.get(
-                                        route(
-                                            "admin.items.index",
-                                            filterToQuery(filter)
-                                        ).toString()
-                                    )
+                                    //Added by Cyblance for Subsite section start
+                                    {
+                                        user?.role != "subsiteadmin" ?
+                                            Inertia.get(
+                                                route(
+                                                    "admin.items.index",
+                                                    filterToQuery(filter)
+                                                ).toString()
+                                            )
+                                            :
+                                            Inertia.get(
+                                                route(
+                                                    "admin.items.index",
+                                                    filterToQuery({ ...filter, ["subsite.id"]: user?.subsite_id })
+                                                ).toString()
+                                            )
+                                    }
+                                    //Added by Cyblance for Subsite section end
                                 }
                                 sx={{ pl: 4 }}
                                 key={idx}
@@ -287,34 +316,50 @@ export const PrimaryNavigation: React.FC = () => {
                         </ListItemIcon>
                         <ListItemText primary="Create collection" />
                     </ListItem>
-                    {MENU_ITEMS.collections.map(
-                        ({ filter, label, Icon, tooltip }, idx) => (
-                            <ListItem
-                                button
-                                disabled={needSave}
-                                onClick={() =>
-                                    Inertia.get(
-                                        route(
-                                            "admin.collections.index",
-                                            filterToQuery(filter)
-                                        ).toString()
-                                    )
-                                }
-                                sx={{ pl: 4 }}
-                                key={idx}
-                            >
-                                <ListItemIcon>
-                                    <Tooltip title={tooltip || ""}>
-                                        {Icon ? <Icon /> : <span></span>}
-                                    </Tooltip>
-                                </ListItemIcon>
-                                <ListItemText primary={label} />
-                            </ListItem>
-                        )
-                    )}
+                    {/* Added by Cyblance for Subsite section start */}
+                    {MENU_ITEMS.collections.map(({ filter, label, Icon, tooltip }, idx) => {
+                        const isAllowed = aliase_name === "" || aliase_name === null || label === "Structure" || label === "Dossiers" || label === "All collections";
+
+                        if (isAllowed) {
+                            return (
+                                <ListItem
+                                    button
+                                    disabled={needSave}
+                                    onClick={() =>
+                                        {
+                                            user?.role != "subsiteadmin" ?
+                                                Inertia.get(
+                                                    route(
+                                                        "admin.collections.index",
+                                                        filterToQuery(filter)
+                                                    ).toString()
+                                                )
+                                                :
+                                                Inertia.get(
+                                                    route(
+                                                        "admin.collections.index",
+                                                        filterToQuery({ ...filter, ["subsite.id"]: user?.subsite_id })
+                                                    ).toString()
+                                                )
+                                        }
+                                    }
+                                    sx={{ pl: 4 }}
+                                    key={idx}
+                                >
+                                    <ListItemIcon>
+                                        <Tooltip title={tooltip || ""}>
+                                            {Icon ? <Icon /> : <span></span>}
+                                        </Tooltip>
+                                    </ListItemIcon>
+                                    <ListItemText primary={label} />
+                                </ListItem>
+                            );
+                        }
+                        return null;
+                    })}
+                    {/* Added by Cyblance for Subsite section end */}
                 </List>
             </Collapse>
-
             <ListItemButton onClick={() => setExpandGeoData(!expandGeoData)}>
                 <ListItemIcon>
                     <CountryIcon />
@@ -422,6 +467,53 @@ export const PrimaryNavigation: React.FC = () => {
                     </Collapse>
                 </>
             )}
+            {/* Added by Cyblance for Subsite section start */}
+            {can?.subsiteadmin?.create && (
+                <>
+                    <ListItem button onClick={() => setExpandSubsites(!expandSubsites)}>
+                        <ListItemIcon>
+                            <WebIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Subsite" />
+                        {expandSubsites ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={expandSubsites} timeout="auto">
+                        <List>
+                            <ListItem
+                                button
+                                sx={{ pl: 4 }}
+                                onClick={() =>
+                                    Inertia.get(route("admin.subsites.create"))
+                                }
+                            >
+                                <ListItemIcon>
+                                    <AddCircleIcon
+                                        color="primary"
+                                    />
+                                </ListItemIcon>
+
+                                <ListItemText primary="Add Subsite" />
+                            </ListItem>
+                            <ListItem
+                                button
+                                disabled={needSave}
+                                onClick={() =>
+                                    Inertia.get(route("admin.subsites.index"))
+                                }
+                                sx={{ pl: 4 }}
+                            >
+                                <ListItemIcon>
+                                    <Tooltip title={""}>
+                                        <DynamicFeedIcon />
+                                    </Tooltip>
+                                </ListItemIcon>
+                                <ListItemText primary="All Subsites" />
+                            </ListItem>
+                        </List>
+                    </Collapse>
+                </>
+            )}
+            {/* Added by Cyblance for Subsite section end */}
             <ListItem button onClick={() => setExpandUsers(!expandUsers)}>
                 <ListItemIcon>
                     <AccountBoxIcon />

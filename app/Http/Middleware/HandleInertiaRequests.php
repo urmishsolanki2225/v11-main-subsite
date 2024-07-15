@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 use App\Actions\AllowedMembershipCollections;
+//Added by Cyblance for Subsite section start
+use App\Actions\FetchSubsite;
+//Added by Cyblance for Subsite section end
 
 class HandleInertiaRequests extends Middleware
 {
@@ -58,6 +61,11 @@ class HandleInertiaRequests extends Middleware
                         "forceDeleteMany" => $request
                             ->user()
                             ->can("forceDeleteMany", Item::class),
+                        //Added by Cyblance for Subsite section start
+                        "subsiteAdminAccess" => $request
+                            ->user()
+                            ->can("subsiteAdminAccess", Item::class),
+                        //Added by Cyblance for Subsite section end
                     ],
                     "users" => [
                         "create" => $request
@@ -89,6 +97,14 @@ class HandleInertiaRequests extends Middleware
                         "forceDeleteMany" => $request
                             ->user()
                             ->can("forceDeleteMany", Collection::class),
+                        //Added by Cyblance for Subsite section start
+                        "view" => $request
+                            ->user()
+                            ->can('view', Collection::class),
+                        "subsiteAdminAccess" => $request
+                            ->user()
+                            ->can("subsiteAdminAccess", Collection::class),
+                        //Added by Cyblance for Subsite section end
                     ],
                     //Added by Cyblance for Annual-Reports section start
                     "annualreports" => [
@@ -109,6 +125,16 @@ class HandleInertiaRequests extends Middleware
                             ->can('view', Annualreport::class),
                     ],
                     //Added by Cyblance for Annual-Reports section start
+                    //Added by Cyblance for Subsite section start
+                    "subsiteadmin" => [
+                        "create" => $request
+                            ->user()
+                            ->can('create', Subsite::class),
+                        "canShareAccess" => $request
+                            ->user()
+                            ->can('canShareAccess', Subsite::class)
+                    ],
+                    //Added by Cyblance for Subsite section end
                 ]
                 : [],
             "user" => $request->user(),
@@ -119,6 +145,9 @@ class HandleInertiaRequests extends Middleware
                     ),
                 ]
                 : [],
+            //Added by Cyblance for Subsite section start
+            "subsite" => FetchSubsite::execute($request),
+            //Added by Cyblance for Subsite section end
             "session_lifetime" => config("session.lifetime") * 1,
         ]);
     }

@@ -267,4 +267,20 @@ class Collection extends Model
             "coop_project_id"
         );
     }
+
+    //Added by Cyblance for Subsite section start
+    public function subsite_items()
+    {
+        $items = $this->belongsToMany('App\Models\Item', 'item_collection')
+            ->withTimestamps()
+            ->whereHas('content')
+            ->with([
+                'content',
+                'images.content.images',
+                'collections.content:id,collection_id,title,lang,slug'
+            ])
+            ->orderByRaw('COALESCE(items.publish_at, items.created_at) desc');
+        return $items;
+    }
+    //Added by Cyblance for Subsite section start
 }

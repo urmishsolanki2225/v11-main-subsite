@@ -17,6 +17,9 @@ export interface IDataSource<T> {
     childTypes?: string[];
     loading?: boolean;
     // filter?:
+    //Added by Cyblance for Subsite section start
+    reload?:any;
+    //Added by Cyblance for Subsite section end
 }
 export interface IDataSourceProps<T> {
     mode: "inertia" | "xhr";
@@ -202,7 +205,14 @@ const useDataSource = <T,>({
                 .finally(() => setLoading(false));
         }
     }, [mode, xhrUrl, page, sort, filter, pageSize, dataNotWrapped]);
+    //Added by Cyblance for Subsite section start
+    const reload = () => {
+        setPage((prev) => prev); // Trigger useEffect for page
+        setSort((prev) => prev); // Trigger useEffect for sort
+        setFilter((prev) => ({ ...prev })); // Trigger useEffect for filter
 
+    };
+    //Added by Cyblance for Subsite section end
     return {
         paginatedData,
         page,
@@ -210,6 +220,9 @@ const useDataSource = <T,>({
         setSort: updateSort,
         childTypes,
         loading,
+        //Added by Cyblance for Subsite section start
+        reload,
+        //Added by Cyblance for Subsite section end
     };
 };
 

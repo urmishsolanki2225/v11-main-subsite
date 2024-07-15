@@ -25,41 +25,72 @@ import { AuthPageProps, ErrorPageProps, User } from "../../Models";
 interface IProps extends AuthPageProps {
     userModel: User;
     roles: Record<string, string>;
+    //Added by Cyblance for Subsite section start
+    subsite_edit: Record<string, string>;
+    //Added by Cyblance for Subsite section end
 }
 const Edit: React.FC<IProps & ErrorPageProps> = ({
     userModel: user,
     errors,
     roles,
     can,
+    //Added by Cyblance for Subsite section start
+    subsite_edit,
+    //Added by Cyblance for Subsite section end
 }) => {
     const { needSave, setNeedSave } = useAppContext();
 
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
     const [role, setRole] = useState(user.role);
+    //Added by Cyblance for Subsite section start
+    const [subOpen, setSubOpen] = useState(false);
+    let [subsite_id, setSubsiteId] = useState(user.subsite_id as any);
+    //Added by Cyblance for Subsite section end
 
     useEffect(() => {
         setName(user.name);
         setEmail(user.email);
         setRole(user.role);
+        //Added by Cyblance for Subsite section start
+        setSubsiteId(user.subsite_id);
+        //Added by Cyblance for Subsite section end
     }, [user]);
 
     useEffect(() => {
         setNeedSave(
-            name !== user.name || email !== user.email || role !== user.role
+            //Added by Cyblance for Subsite section start
+            name !== user.name || email !== user.email || role !== user.role || subsite_id !== user.subsite_id
         );
-    }, [setNeedSave, user, name, email, role]);
+        if (role == "subsiteadmin" && (subsite_id == null)) {
+            setNeedSave(false);
+        }
+    }, [setNeedSave, user, name, email, role, subsite_id]);
+    useEffect(() => {
+        if (role != "subsiteadmin") {
+            setSubOpen(false);
+            setSubsiteId(null);
+        } else {
+            setSubOpen(true);
+        }
+    }, [role]);
+    //Added by Cyblance for Subsite section end
 
     const onReset = () => {
         setName(user.name);
         setEmail(user.email);
         setRole(user.role);
+        //Added by Cyblance for Subsite section start
+        setSubsiteId(user.subsite_id);
+        //Added by Cyblance for Subsite section end
     };
 
     const onSave = () => {
         Inertia.patch(
             route("admin.users.update", { user }).toString(),
-            { email, name, role },
+            //Added by Cyblance for Subsite section start
+            { email, name, role, subsite_id },
+            //Added by Cyblance for Subsite section end
             {
                 preserveState: true,
             }
@@ -132,7 +163,9 @@ const Edit: React.FC<IProps & ErrorPageProps> = ({
                             />
                         </Grid>
                         {can?.role?.update && (
-                            <Grid item xs={12}>
+                             // Added by Cyblance for Subsite section start
+                            <Grid item xs={6}>
+                                {/* Added by Cyblance for Subsite section start */}
                                 <FormControl variant="outlined" fullWidth>
                                     <InputLabel>Role</InputLabel>
                                     <Select
@@ -158,6 +191,37 @@ const Edit: React.FC<IProps & ErrorPageProps> = ({
                             </Grid>
                         )}
                     </Grid>
+                    {/*Added by Cyblance for Subsite section start*/}
+                    {can?.subsite?.updateSubsite && role == "subsiteadmin" &&(
+                        <Grid item xs={6}>
+                            <Box ml={2}>
+                            <FormControl variant="outlined" fullWidth>
+                                <InputLabel>Subsite name</InputLabel>
+                                <Select
+                                    open={subOpen}
+                                    disabled={role != "subsiteadmin"}
+                                    onOpen={() => setSubOpen(true)}
+                                    onClose={() => setSubOpen(false)}
+                                    label="Subsite Name"
+                                    onChange={(e) =>
+                                        setSubsiteId(e.target.value as any)
+                                    }
+                                    value={subsite_id || ''}
+                                    fullWidth
+                                >
+                                    {Object.entries(subsite_edit[0]).map(
+                                        ([subsite_id, label], i) => (
+                                            <MenuItem value={subsite_id} key={i}>
+                                                {label}
+                                            </MenuItem>
+                                        )
+                                    )}
+                                </Select>
+                            </FormControl>
+                            </Box>
+                        </Grid>
+                    )}
+                    {/*Added by Cyblance for Subsite section end*/}
                 </Section>
                 <Section title="Actions">
                     <Grid container spacing={4} alignItems="baseline">

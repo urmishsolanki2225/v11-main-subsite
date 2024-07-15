@@ -17,9 +17,11 @@ import {
     ListingMultiSelectActionHandler,
     ListingMultiSelectActionProps,
 } from "./Listing";
-
+//Added by Cyblance for Subsite section start
+import { CircularProgress, Stack } from "@mui/material";
 const MultiSelectActionsFooter = <T extends { id: GridRowId }>({
-    actions,
+    actions, mainsite
+    //Added by Cyblance for Subsite section end
 }: PropsWithChildren<
     GridFooterContainerProps & ListingMultiSelectActionProps<T>
 >) => {
@@ -65,6 +67,28 @@ const MultiSelectActionsFooter = <T extends { id: GridRowId }>({
                         </Button>
                     </Confirm>
                 ))}
+                {/*Added by Cyblance for Subsite section start*/}
+                {
+                    mainsite?.map(({ identifier, label, onAction, loader }) => (
+                        <Stack key={identifier} spacing={2} direction="row">
+                            <Confirm
+                                confirmText="Do you want to copy items into mainsite?"
+                                key={identifier}
+                                onConfirm={() => onClickAction(onAction)}
+                            >
+                                <Button variant="contained" disabled={!enable}>
+                                    {label}
+                                </Button>
+                            </Confirm>
+                            {loader ?
+                                <CircularProgress size={35} thickness={5} />
+                                :
+                                null
+                            }
+                        </Stack>
+                    ))
+                }
+                {/*Added by Cyblance for Subsite section end*/}
             </Box>
             {paginationElement}
         </Box>

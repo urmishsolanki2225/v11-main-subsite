@@ -8,10 +8,14 @@ export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
 
     return {
-        base: '/v11-main/public/build/',
+        //base: '/v11-main/public/build/',
         plugins: [
             react(),
             laravel([
+                //Added by Cyblance for Subsite section start
+                "resources/sass/style-subsite.scss",              
+                "resources/js/subsite-script.js",
+                //Added by Cyblance for Subsite section end
                 "resources/sass/style.scss",
                 //Added by Cyblance for Annual-Reports section start
                 "resources/sass/highlight.scss",

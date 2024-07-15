@@ -28,8 +28,10 @@ class CollectionPolicy
      * @param  \App\Models\Collection  $collection
      * @return mixed
      */
-    public function view(User $user, Collection $collection)
+    //Added by Cyblance for Subsite section start
+    public function view(User $user)
     {
+        //Added by Cyblance for Subsite section end
         return true;
     }
 

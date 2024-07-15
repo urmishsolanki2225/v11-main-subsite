@@ -25,6 +25,14 @@ export interface ListingMultiSelectActionProps<T extends IDable> {
         label: string;
         onAction: ListingMultiSelectActionHandler<T>;
     }[];
+    //Added by Cyblance for Subsite section start
+    mainsite?: {
+        identifier: string;
+        label: string;
+        onAction: ListingMultiSelectActionHandler<T>;
+        loader?: boolean;
+    }[];
+    //Added by Cyblance for Subsite section end
 }
 
 interface IProps<T extends IDable> {
