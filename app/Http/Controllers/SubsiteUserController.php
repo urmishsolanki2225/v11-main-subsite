@@ -585,10 +585,10 @@ class SubsiteUserController extends Controller
             })
             ->orderBy("created_at", "desc");
         $id = $this->subsites['subsites']->region_id;
-        $items = $items->whereHas(
+       $items = $items->whereHas(
             "collections.content",
-            function ($query) use ($id) {
-                $query->where("collection_id", $id);
+            function ($query){
+                $query->where("collection_id", $this->subsites['subsites']->region_id);
             },
         );
 
