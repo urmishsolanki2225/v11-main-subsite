@@ -265,6 +265,9 @@ class SubsiteUserController extends Controller
         $collection = Collection::with([
             "images.content.images",
             "subCollections.parentCollections",
+            "subCollections" => function ($query) {
+                $query->where("type", "dossier_sub");
+            },
         ])
         ->withCount(["subCollections"])
         ->findOrFail($id);
