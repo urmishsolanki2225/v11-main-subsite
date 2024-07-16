@@ -65,7 +65,7 @@ Route::prefix("{locale}")
             Route::get('/affiliates', 'SubsiteUserController@listAffiliates')->name('subsite.affiliates');
             Route::get('/governance', 'SubsiteUserController@getBylaws')
                 ->defaults('id', config('eiie.collection.constitutional-documents'))
-                ->name('subsite.governance');           
+                ->name('subsite.governance.constitution-and-bylaws');           
             Route::get('/news', 'SubsiteUserController@news_list')
                 ->defaults('id', config('eiie.collection.news'))
                 ->name('subsite.news');

@@ -64,7 +64,7 @@ class PrimaryNavigationSubsite extends Component
                             ->addClass("nav_drop_listing")
                             ->route("subsite.who-we-are", __("eiie.Who we are"))
                             ->route("subsite.affiliates", __("eiie.Our Members"))
-                            ->route("subsite.governance", __("eiie.Governance"))
+                            ->route("subsite.governance.constitution-and-bylaws", __("eiie.Governance"))
                             ->add(
                                 Link::toRoute(
                                     "subsite.newsletter",

@@ -161,36 +161,20 @@ if (isset($name)) {
         Breadcrumbs::for('home', function ($trail) {
             $trail->push(trans('eiie.Home'), route('subsite.home'));
         });
-    } elseif ($name == 'subsite.governance') {
-        Breadcrumbs::for($name, function ($trail) {
-            $trail->parent('home');
-            $trail->push(trans('eiie.Governance'), route('subsite.governance'));
-        });
-        Breadcrumbs::for('home', function ($trail) {
-            $trail->push(trans('eiie.Home'), route('subsite.home'));
-        });
     } elseif ($name == 'subsite.governance.constitution-and-bylaws') {
         Breadcrumbs::for('home', function ($trail) {
             $trail->push(trans('eiie.Home'), route('subsite.home'));
-        });
-        Breadcrumbs::for('governance', function ($trail) {
-            $trail->parent('home');
-            $trail->push('Governance', route('subsite.governance'));
-        });
+        });       
         Breadcrumbs::for($name, function ($trail) {
-            $trail->parent('governance');
+            $trail->parent('home');
             $trail->push('Contitutional Document', route('subsite.governance.constitution-and-bylaws'));
         });
     } elseif ($name == 'subsite.governance.world-congress') {
         Breadcrumbs::for('home', function ($trail) {
             $trail->push(trans('eiie.Home'), route('subsite.home'));
-        });
-        Breadcrumbs::for('governance', function ($trail) {
-            $trail->parent('home');
-            $trail->push('Governance', route('subsite.governance'));
-        });
+        });       
         Breadcrumbs::for($name, function ($trail) {
-            $trail->parent('governance');
+            $trail->push(trans('eiie.Home'), route('subsite.home'));
             $trail->push('World Congress', route('subsite.governance.world-congress'));
         });
     } elseif ($name == 'subsite.governance.annual-reports') {
