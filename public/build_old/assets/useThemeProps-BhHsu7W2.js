@@ -1,1 +1,0 @@
-import{g as t}from"./getThemeProps-wzNSIbEv.js";import{u as p}from"./useTheme-BwdP6VHP.js";function i({props:o,name:s,defaultTheme:m,themeId:r}){let e=p(m);return r&&(e=e[r]||e),t({theme:e,name:s,props:o})}export{i as u};
