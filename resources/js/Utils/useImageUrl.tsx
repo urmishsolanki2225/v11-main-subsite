@@ -21,7 +21,7 @@ const useImageUrl = (
         //           }&h=${imageProps?.h || ""}&fit=${imageProps?.fit || ""}`
         //         : undefined
         // );
-        setUrl(resource?.path ? `/${resource?.path}/card.jpg` : undefined);
+        setUrl(resource?.path ? `/regional-websites/${resource?.path}/card.jpg` : undefined);
     }, [resource, imageProps]);
 
     return url;

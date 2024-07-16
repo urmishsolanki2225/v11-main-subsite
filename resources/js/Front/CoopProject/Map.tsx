@@ -15,7 +15,7 @@ import route from "ziggy-js";
 import { DevCoopProjectPartner } from "../../Models";
 
 // https://code.highcharts.com/mapdata/ ToDo check Palestine
-const mapUrl = `${window.location.protocol}//${window.location.hostname}`+"/v11-main-subsite/public/world-map.json";
+const mapUrl = `${window.location.protocol}//${window.location.hostname}`+"/public/world-map.json";
 // const colorScale = ["#bbb", "#888", "#333"];
 const colorScale = ["url(#Gradient3)", "url(#Gradient2)", "url(#Gradient1)"];
 

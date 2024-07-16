@@ -116,7 +116,7 @@ $segment=Request::segment(1);
         @php $items = officeAddress() @endphp
         
         @if(count($items) == 0)
-            <p>No office address available.</p>
+            <p> {{ __('eiie.No address available.') }}</p>
         @else
             @foreach($items as $item)
             <article class="contact_us_office card card_affiliate">

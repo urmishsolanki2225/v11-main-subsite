@@ -369,5 +369,6 @@ return [
     "Northamerica Region By Laws" => 'Northamerica Region By Laws',
     "ACCRS Region By Laws" => 'ACCRS Region By Laws',
     "Latin-america Region By Laws" => 'Latin-america Region By Laws',
+    "No address available." => 'No address available.',
     //Added by Cyblance for Subsite section end
 ];

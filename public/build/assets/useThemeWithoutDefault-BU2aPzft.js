@@ -1,0 +1,1 @@
+import{r as n}from"./client-ZKQMN23D.js";import{h as o}from"./identifier-DHETMsl0.js";function r(t){return Object.keys(t).length===0}function u(t=null){const e=n.useContext(o);return!e||r(e)?t:e}export{u};

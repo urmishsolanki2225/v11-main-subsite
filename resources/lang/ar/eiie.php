@@ -337,7 +337,6 @@ return [
     "Northamerica Region By Laws" => 'منطقة أمريكا الشمالية حسب القوانين',
     "ACCRS Region By Laws" => 'منطقة ACCRS بموجب القوانين',
     "Latin-america Region By Laws" => 'منطقة أمريكا اللاتينية حسب القوانين',
+    "No address available." => 'لا يوجد عنوان متاح.',
     //Added by Cyblance for Subsite section end
-
-
 ];
