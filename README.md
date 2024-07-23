@@ -134,7 +134,7 @@ Password -
     - subsite-library.blade.php
 
 * resources\views\shared\cards\resource\
-    - file.blade.php
+    - subsite-file.blade.php
 
 * resources\views\subsite-item\
     - dev_coop_project.blade.php
