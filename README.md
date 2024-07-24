@@ -30,6 +30,7 @@ Password -
     - LoginController.php
     - SubsiteController.php
     - UserController.php
+    - DashboardController.php
 
 * app\Http\Controllers\
     - CoopProjectController.php
