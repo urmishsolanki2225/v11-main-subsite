@@ -163,6 +163,7 @@ BACKEND
 * resources\js\Components\
     - MetaInfoManager.tsx
     - SubsiteItemList.tsx
+    - AnalyticsData.tsx
 
 * resources\js\Components\Listing\
     - Listing.tsx
