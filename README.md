@@ -22,7 +22,7 @@ Password -
     - SubsiteCollectionFilter.php
 
 * app\Helpers\
-- BackendClass.php
+  - BackendClass.php
 
 * app\Http\Controllers\Admin
     - CollectionController.php
