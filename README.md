@@ -143,6 +143,10 @@ Password -
 
 BACKEND
 -----------------
+* resources\js\Pages
+    - Home.tsx
+    - Subsite.tsx
+    - styles.css
 * resources\js\Pages\Users\
     - Create.tsx
     - Edit.tsx
