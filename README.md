@@ -151,6 +151,7 @@ BACKEND
     - index.ts
     - Inertia.ts
     - User.ts
+    - Subsite.tsx
 
 * resources\js\Layout\
     - AdminLayout.tsx
